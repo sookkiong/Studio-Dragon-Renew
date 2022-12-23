@@ -49,6 +49,7 @@ const Menu = styled.div`
   height: 35px;
   background: url("/img/sub_ham.png") no-repeat center center;
   background-size: contain;
+  cursor: pointer;
 `;
 const Logo = styled.div`
   width: 128px;
