@@ -1,10 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import About from "./pages/About";
 import PageHeader from "./layout/PageHeader";
+import GlobalStyle from "./GlobalStyle";
 
 function App() {
   return (
     <>
+      <GlobalStyle />
       <BrowserRouter>
         <Routes>
           <Route path="/" />
