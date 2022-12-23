@@ -17,7 +17,7 @@ const About = () => {
       </Section1>
 
       <Section2>
-        <div>BUSINESS</div>
+        <DropText>BUSINESS</DropText>
 
         <Boxes>
           <Box>
@@ -98,10 +98,16 @@ const ImgBox = styled.div`
 const Section2 = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 120px 100px 0;
+  margin: 120px 10% 0;
+`;
+const DropText = styled.span`
+  font-size: 120px;
+  font-weight: 600;
+  transform: rotate(90deg);
+  height: 10px;
 `;
 const Boxes = styled.div`
-  width: 1000px;
+  width: 65%;
   display: flex;
   justify-content: space-between;
 `;
