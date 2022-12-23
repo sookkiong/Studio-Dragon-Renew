@@ -1,15 +1,29 @@
 import styled from "styled-components";
+import { langOnState } from "../store/LangAtom";
+import { useRecoilState } from "recoil";
 
 const Header = () => {
+  const [lang, setLang] = useRecoilState(langOnState);
+
   return (
     <Wraaper>
       <HeaderWrap>
         <Menu></Menu>
         <Logo></Logo>
         <Lang>
-          <List>KOR</List>
-          <List>|</List>
-          <List>ENG</List>
+          <List
+            id={lang === "kor" ? "selected" : undefined}
+            onClick={() => setLang("kor")}
+          >
+            KOR
+          </List>
+          <List id="bar">|</List>
+          <List
+            id={lang === "eng" ? "selected" : undefined}
+            onClick={() => setLang("eng")}
+          >
+            ENG
+          </List>
         </Lang>
       </HeaderWrap>
     </Wraaper>
@@ -46,8 +60,24 @@ const Lang = styled.ul`
   list-style: none;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0;
   margin: 0;
   width: 100px;
 `;
-const List = styled.li``;
+const List = styled.li`
+  cursor: pointer;
+  color: #ccc;
+  &:hover {
+    text-decoration: underline;
+  }
+  &#selected {
+    color: #000;
+    font-weight: 500;
+  }
+  &#bar {
+    cursor: default;
+    text-decoration: none;
+    font-size: 14px;
+  }
+`;
