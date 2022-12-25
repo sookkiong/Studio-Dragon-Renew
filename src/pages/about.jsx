@@ -22,11 +22,11 @@ const About = () => {
         <Boxes>
           <Box>
             <BImgBox bg="1"></BImgBox>
-            <span>TRY SOMETHING NEW</span>
-            <div>
+            <SmallTitle>TRY SOMETHING NEW</SmallTitle>
+            <BSTitle>
               우리는 늘 새로운 시도로 시청자들에게 보는 즐거움을 제공합니다.
-            </div>
-            <p>
+            </BSTitle>
+            <BSPara>
               새롭고 차별화된 소재로 기획하여 제작한 웰메이드 드라마를 다양한
               채널에 공급하여 국내 드라마 시장 저변 확대에 기여하고 있습니다.
               <br />
@@ -34,16 +34,16 @@ const About = () => {
               스튜디오 자체 제작과 더불어 신인 창작자의 성장을 지원하고,
               실력있는 기성 제작자들과의 네트워크를 강화하여 더욱 영향력 있는
               조직으로 나아가고 있습니다.
-            </p>
+            </BSPara>
           </Box>
 
-          <Box>
+          <Box id="right">
             <BImgBox bg="2"></BImgBox>
-            <span>GLOBAL PROJECT</span>
-            <div>
+            <SmallTitle>GLOBAL PROJECT</SmallTitle>
+            <BSTitle>
               당사의 우수한 드라마를 해외에 수출하고, 한류를 선도하고 있습니다.
-            </div>
-            <p>
+            </BSTitle>
+            <BSPara>
               빠르게 성장 중인 중국, 동남아시아 사업자들과 활발한 교류를 하는
               중이며, 로컬 사업자들과 합작 프로젝트, 제작 컨설팅 등을 통해
               현지에서도 고퀄리티 드라마를 선보이고 있습니다.
@@ -51,17 +51,81 @@ const About = () => {
               <br />
               이외에도 스튜디오 드래곤은 여러 새로운 시장을 개척하며 글로벌
               사업을 적극 확대할 계획입니다.
-            </p>
+            </BSPara>
           </Box>
         </Boxes>
       </Section2>
+
+      <Section3>
+        <Sect3Inner>
+          <Sect3Slogan>
+            DRAMA PARAGON
+            <br />
+            여의주를 품은 아시아의 龍
+          </Sect3Slogan>
+          <Sect3ImgBox>
+            <img
+              src="/img/slogan.png"
+              alt="슬로건 이미지"
+              width="100%"
+              height="100%"
+            />
+          </Sect3ImgBox>
+        </Sect3Inner>
+      </Section3>
+
+      <Section4>
+        <div style={{ width: "30%", marginRight: "200px" }}>
+          <span
+            style={{
+              width: "100%",
+              borderLeft: "5px solid #003a76",
+              display: "block",
+              paddingLeft: "30px",
+              fontSize: "30px",
+              fontWeight: "600",
+            }}
+          >
+            스튜디오 드래곤의
+            <br />
+            3가지 목표
+          </span>
+          <ul
+            style={{
+              listStyle: "none",
+              margin: "0",
+              padding: "0",
+              textAlign: "justify",
+            }}
+          >
+            <li>
+              국내와 아시아에 안주하지 않고 타임워너, 월트디즈니와 어깨를 나란히
+              하는 TOP10 미디어 컨텐츠 회사로 도약하겠습니다.
+            </li>
+            <li>
+              초과 성과에 대한 분배, 제작환경의 개선, 신인 크리에이터 육성 등을
+              체계적으로 지원하겠습니다.
+            </li>
+            <li>
+              전 세계 시청자에게 다양한 컨텐츠를 제공하고, 차별화된 퀄리티의
+              작품을 시도해 컨텐츠 발전에 앞장서겠습니다.
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          VISION&
+          <br />
+          MISSION
+        </div>
+      </Section4>
     </>
   );
 };
 
 export default About;
 
-//SECTTION1
+//SECTION1
 const Section1 = styled.div`
   margin-top: 50px;
   display: flex;
@@ -86,7 +150,6 @@ const Explain = styled.span`
   margin-top: 20px;
   font-weight: 500;
 `;
-
 const ImgBox = styled.div`
   width: 50%;
   height: 475px;
@@ -94,29 +157,82 @@ const ImgBox = styled.div`
   background-size: cover;
 `;
 
-//SECTTION2
+//SECTION2
 const Section2 = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 120px 10% 0;
+  width: 100%;
+  height: 1680px;
+  margin-top: 100px;
+  position: relative;
 `;
 const DropText = styled.span`
-  font-size: 120px;
-  font-weight: 600;
+  font-size: 160px;
+  font-weight: 900;
+  position: absolute;
+  top: 285px;
+  left: -10%;
   transform: rotate(90deg);
-  height: 10px;
 `;
 const Boxes = styled.div`
-  width: 65%;
+  width: 50%;
   display: flex;
   justify-content: space-between;
+  position: absolute;
+  top: 0;
+  right: 10%;
 `;
 const Box = styled.div`
-  width: 400px;
+  width: 45%;
+  &#right {
+    margin-top: 500px;
+  }
 `;
-
 const BImgBox = styled.div`
   width: 100%;
   height: 520px;
   background: url("/img/info${(props) => props.bg}.png") no-repeat center center;
+  background-size: cover;
+`;
+const SmallTitle = styled.span`
+  color: #ccc;
+  padding: 15px 0 10px;
+  display: block;
+`;
+const BSTitle = styled.div`
+  font-size: 24px;
+  font-weight: 600;
+`;
+const BSPara = styled.p`
+  line-height: 28px;
+`;
+
+//SECTION3
+const Section3 = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+const Sect3Inner = styled.div`
+  width: 70%;
+`;
+const Sect3Slogan = styled.div`
+  font-size: 75px;
+  border-left: 8px solid #003a76;
+  text-align: right;
+  padding-right: 5%;
+  font-weight: 600;
+  line-height: 78px;
+`;
+const Sect3ImgBox = styled.div`
+  width: 100%;
+  margin-top: 30px;
+`;
+
+//SECTION4
+const Section4 = styled.div`
+  margin-top: 260px;
+  display: flex;
+  justify-content: center;
 `;
