@@ -75,50 +75,92 @@ const About = () => {
       </Section3>
 
       <Section4>
-        <div style={{ width: "30%", marginRight: "200px" }}>
-          <span
-            style={{
-              width: "100%",
-              borderLeft: "5px solid #003a76",
-              display: "block",
-              paddingLeft: "30px",
-              fontSize: "30px",
-              fontWeight: "600",
-            }}
-          >
+        <VMWrap>
+          <VMTitle>
             스튜디오 드래곤의
             <br />
             3가지 목표
-          </span>
-          <ul
-            style={{
-              listStyle: "none",
-              margin: "0",
-              padding: "0",
-              textAlign: "justify",
-            }}
-          >
-            <li>
+          </VMTitle>
+          <VMul>
+            <VMList bg="1" loc="16px center">
               국내와 아시아에 안주하지 않고 타임워너, 월트디즈니와 어깨를 나란히
               하는 TOP10 미디어 컨텐츠 회사로 도약하겠습니다.
-            </li>
-            <li>
+            </VMList>
+            <VMList bg="2" loc="8px center">
               초과 성과에 대한 분배, 제작환경의 개선, 신인 크리에이터 육성 등을
               체계적으로 지원하겠습니다.
-            </li>
-            <li>
+            </VMList>
+            <VMList bg="3" loc="5px center">
               전 세계 시청자에게 다양한 컨텐츠를 제공하고, 차별화된 퀄리티의
               작품을 시도해 컨텐츠 발전에 앞장서겠습니다.
-            </li>
-          </ul>
-        </div>
+            </VMList>
+          </VMul>
+        </VMWrap>
 
-        <div>
+        <VMSlogan>
           VISION&
           <br />
-          MISSION
-        </div>
+          &nbsp;&nbsp;&nbsp;&nbsp;MISSION
+        </VMSlogan>
       </Section4>
+
+      <Section5>
+        <Sect5BG>
+          <Sect5Para>
+            내가 보여 주고 싶은 춤 네가 보여줄 수 있을 것 같았어
+            <br />난 네가 무대에 서는 걸 꼭 봐야겠어.
+            <DramaLine>
+              -스튜디오 드래곤 제작 드라마 '나빌레라' 대사 중
+            </DramaLine>
+          </Sect5Para>
+        </Sect5BG>
+      </Section5>
+
+      <Footer>
+        <div style={{ width: "90%", margin: "0 auto" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              borderBottom: "1px solid #fff",
+              paddingTop: "50px",
+            }}
+          >
+            <p style={{ margin: "0", color: "#fff" }}>
+              스튜디오 드래곤{" "}
+              <span style={{ display: "block", fontSize: "20px" }}>
+                STUDIO DRAGON CORP.
+              </span>
+              SINCE 2016.05.03
+              <br />
+              SOUTH KOREA
+              <br />
+              (주)스튜디오드래곤 서울특별시 마포구 매봉산로 75, 17층 스튜디오
+              드래곤 주식회사
+              <br />
+              사업자등록번호: 747-81-00388 대표자: 김영규, 김제현
+            </p>
+            <div>
+              <button>↑</button>
+              <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
+            </div>
+          </div>
+
+          <div>
+            <ul>
+              <li>법적고지</li>
+              <li>이메일무단수집거부</li>
+              <li>사이버감사실</li>
+              <li>CONTACT US</li>
+            </ul>
+            <span>ⓒ2022 STUDIO DRAGON Corp. All Rights Reserved.</span>
+          </div>
+        </div>
+      </Footer>
     </>
   );
 };
@@ -234,5 +276,74 @@ const Sect3ImgBox = styled.div`
 const Section4 = styled.div`
   margin-top: 260px;
   display: flex;
-  justify-content: center;
+  position: relative;
+  height: 800px;
+`;
+const VMWrap = styled.div`
+  width: 33%;
+  margin-right: 100px;
+  position: absolute;
+  left: 30%;
+`;
+const VMTitle = styled.span`
+  width: 100%;
+  display: block;
+  border-left: 5px solid #003a76;
+  padding-left: 30px;
+  font-size: 30px;
+  font-weight: 600;
+`;
+const VMul = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: justify;
+  margin-top: 60px;
+`;
+const VMList = styled.li`
+  margin-bottom: 80px;
+  background: url("/img/vm${(props) => props.bg}.png") no-repeat;
+  background-position: ${(props) => props.loc};
+  background-size: contain;
+  padding-left: 90px;
+`;
+const VMSlogan = styled.div`
+  transform: rotate(90deg);
+  font-size: 140px;
+  font-weight: 600;
+  line-height: 100px;
+  position: absolute;
+  top: 150px;
+  right: -5%;
+`;
+
+//SECTION5
+const Section5 = styled.div`
+  width: 100%;
+`;
+
+const Sect5BG = styled.div`
+  width: 65%;
+  height: 580px;
+  background: url("/img/show.png") no-repeat;
+  background-size: cover;
+`;
+const Sect5Para = styled.p`
+  padding: 100px;
+  color: #fff;
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: 1px;
+`;
+const DramaLine = styled.span`
+  display: block;
+  font-size: 16px;
+  margin-top: 30px;
+  font-weight: 400;
+`;
+
+//footer
+const Footer = styled.footer`
+  width: 100%;
+  background: purple;
 `;
