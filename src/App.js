@@ -3,6 +3,7 @@ import About from "./pages/About";
 import PageHeader from "./layout/PageHeader";
 import GlobalStyle from "./GlobalStyle";
 import Footer from "./layout/Footer";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -11,8 +12,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" />
-          <Route path="/about" element={<PageHeader />}>
-            <Route index element={<About />} />
+          <Route path="/" element={<PageHeader />}>
+            <Route path="about" element={<About />} />
+            <Route path="contact" element={<Contact />} />
           </Route>
         </Routes>
         <Footer />
