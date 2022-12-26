@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import About from "./pages/About";
-import PageHeader from "./layout/PageHeader";
-import PageHeaderW from "./layout/PageHeaderW";
+import BlackLayout from "./layout/BlackLayout";
+import WhiteLayout from "./layout/WhiteLayout";
 import GlobalStyle from "./GlobalStyle";
-import Footer from "./layout/Footer";
+import Footer from "./components/Footer";
 import Contact from "./pages/Contact";
 import Contents from "./pages/Contents";
 
@@ -14,11 +14,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" />
-          <Route path="/" element={<PageHeader />}>
+          <Route path="/" element={<BlackLayout />}>
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
           </Route>
-          <Route path="/" element={<PageHeaderW />}>
+          <Route path="/" element={<WhiteLayout />}>
             <Route path="contents" element={<Contents />} />
           </Route>
         </Routes>

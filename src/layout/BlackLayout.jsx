@@ -1,13 +1,13 @@
 import { Outlet } from "react-router";
 import Header from "../components/Header";
 
-const PageHeader = () => {
+const BlackLayout = () => {
   return (
     <>
-      <Header />
+      <Header id="black" />
       <Outlet />
     </>
   );
 };
 
-export default PageHeader;
+export default BlackLayout;

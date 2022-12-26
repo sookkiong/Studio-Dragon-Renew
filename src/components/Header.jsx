@@ -2,39 +2,44 @@ import styled from "styled-components";
 import { langOnState } from "../store/LangAtom";
 import { useRecoilState } from "recoil";
 
-const Header = () => {
+const Header = ({ id }) => {
   const [lang, setLang] = useRecoilState(langOnState);
 
   return (
-    <Wraaper>
+    <Wrapper id={id}>
       <HeaderWrap>
-        <Menu></Menu>
-        <Logo></Logo>
+        <Menu id={id} />
+        <Logo id={id} />
         <Lang>
           <List
-            id={lang === "kor" ? "selected" : undefined}
+            id={lang === "kor" ? `selected_${id}` : undefined}
             onClick={() => setLang("kor")}
           >
             KOR
           </List>
           <List id="bar">|</List>
           <List
-            id={lang === "eng" ? "selected" : undefined}
+            id={lang === "eng" ? `selected_${id}` : undefined}
             onClick={() => setLang("eng")}
           >
             ENG
           </List>
         </Lang>
       </HeaderWrap>
-    </Wraaper>
+    </Wrapper>
   );
 };
 
 export default Header;
 
-const Wraaper = styled.div`
-  border-bottom: 1px solid #7c7c7c;
+const Wrapper = styled.div`
   width: 100%;
+  &#white {
+    position: absolute;
+  }
+  &#black {
+    border-bottom: 1px solid #7c7c7c;
+  }
 `;
 const HeaderWrap = styled.header`
   width: 75%;
@@ -47,15 +52,25 @@ const HeaderWrap = styled.header`
 const Menu = styled.div`
   width: 35px;
   height: 35px;
-  background: url("/img/sub_ham.png") no-repeat center center;
   background-size: contain;
   cursor: pointer;
+  &#white {
+    background: url("/img/sub_ham_w.png") no-repeat center center;
+  }
+  &#black {
+    background: url("/img/sub_ham.png") no-repeat center center;
+  }
 `;
 const Logo = styled.div`
   width: 128px;
   height: 53px;
-  background: url("/img/logo.png") no-repeat center center;
   background-size: contain;
+  &#white {
+    background: url("/img/logo_w.png") no-repeat center center;
+  }
+  &#black {
+    background: url("/img/logo.png") no-repeat center center;
+  }
 `;
 const Lang = styled.ul`
   list-style: none;
@@ -72,7 +87,11 @@ const List = styled.li`
   &:hover {
     text-decoration: underline;
   }
-  &#selected {
+  &#selected_white {
+    color: #fff;
+    font-weight: 500;
+  }
+  &#selected_black {
     color: #000;
     font-weight: 500;
   }
