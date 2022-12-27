@@ -4,9 +4,10 @@ import { useState } from "react";
 const Contents = () => {
   const [category, setCategory] = useState("방영작 전체");
   const [on, setOn] = useState(false);
-  //   const CateOn = (value) =>{
-  //     const id =
-  //   }
+  const onItem = () => {
+    const id = on === true ? "arrow" : undefined;
+    return id;
+  };
 
   return (
     <>
@@ -23,24 +24,38 @@ const Contents = () => {
       <ContentsWrap>
         <ContentsTop>
           <div>스튜디오 드래곤의 웰메이드 작품들을 한눈에 볼 수 있습니다.</div>
-          <div>
-            <div
-              style={{
-                padding: "10px 120px 10px 15px",
-                border: "1px solid #000",
-                background: "url('/img/m_arrow_off.png') no-repeat 90% center",
-                cursor: "pointer",
-              }}
-            >
+          <div style={{ width: "220px" }}>
+            <ItemText id={onItem()} onClick={() => setOn(!on)}>
               {category}
-            </div>
-            <Categorys>
-              <Item onClick={() => setCategory("방영작 전체")}>
-                방영작 전체
-              </Item>
-              <Item onClick={() => setCategory("방영 중")}>방영 중</Item>
-              <Item onClick={() => setCategory("종영 작")}>종영 작</Item>
-            </Categorys>
+            </ItemText>
+            {on === true ? (
+              <Categorys>
+                <Item
+                  onClick={() => {
+                    setCategory("방영작 전체");
+                    setOn(!on);
+                  }}
+                >
+                  방영작 전체
+                </Item>
+                <Item
+                  onClick={() => {
+                    setCategory("방영 중");
+                    setOn(!on);
+                  }}
+                >
+                  방영 중
+                </Item>
+                <Item
+                  onClick={() => {
+                    setCategory("종영 작");
+                    setOn(!on);
+                  }}
+                >
+                  종영 작
+                </Item>
+              </Categorys>
+            ) : undefined}
           </div>
         </ContentsTop>
       </ContentsWrap>
@@ -80,6 +95,15 @@ const ContentsWrap = styled.div`
 const ContentsTop = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+const ItemText = styled.div`
+  padding: 10px 120px 10px 15px;
+  border: 1px solid #000;
+  background: url("/img/m_arrow_off.png") no-repeat 90% center;
+  cursor: pointer;
+  &#arrow {
+    background: url("/img/m_arrow_on.png") no-repeat 90% center;
+  }
 `;
 const Categorys = styled.ul`
   list-style: none;
