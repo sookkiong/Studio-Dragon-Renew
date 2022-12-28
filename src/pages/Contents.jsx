@@ -25,8 +25,17 @@ const Contents = () => {
 
       <ContentsWrap>
         <ContentsTop>
-          <div>스튜디오 드래곤의 웰메이드 작품들을 한눈에 볼 수 있습니다.</div>
-          <div style={{ width: "220px" }}>
+          <div style={{ position: "absolute", left: "0", lineHeight: "50px" }}>
+            스튜디오 드래곤의 웰메이드 작품들을 한눈에 볼 수 있습니다.
+          </div>
+          <div
+            style={{
+              width: "220px",
+              position: "absolute",
+              right: "0",
+              zIndex: "10",
+            }}
+          >
             <ItemText id={onItem()} onClick={() => setOn(!on)}>
               {category}
             </ItemText>
@@ -64,15 +73,15 @@ const Contents = () => {
           </div>
         </ContentsTop>
 
-        <div>
+        <PosterWrap>
           {poster === "all"
             ? Works.map((value) => {
-                return <div>{value.title}</div>;
+                return <Work bg={value.id}></Work>;
               })
             : Works.filter((work) => work.onAir === poster).map((value) => {
-                return <div>{value.title}</div>;
+                return <Work bg={value.id}></Work>;
               })}
-        </div>
+        </PosterWrap>
       </ContentsWrap>
     </>
   );
@@ -108,8 +117,8 @@ const ContentsWrap = styled.div`
   padding: 0 15%;
 `;
 const ContentsTop = styled.div`
-  display: flex;
-  justify-content: space-between;
+  position: relative;
+  height: 50px;
 `;
 const ItemText = styled.div`
   padding: 10px 120px 10px 15px;
@@ -126,6 +135,7 @@ const Categorys = styled.ul`
   padding: 0;
   border: 1px solid #000;
   border-top: none;
+  background: #fff;
 `;
 const Item = styled.li`
   padding: 10px 120px 10px 15px;
@@ -133,4 +143,21 @@ const Item = styled.li`
   &:hover {
     text-decoration: underline;
   }
+`;
+
+const PosterWrap = styled.div`
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: 300px 300px 300px;
+  justify-content: space-between;
+`;
+
+const Work = styled.div`
+  height: 400px;
+  margin-bottom: 50px;
+  background: url("/img/wc${(props) => props.bg}.jpg") no-repeat center center;
+  background-size: cover;
+  cursor: pointer;
 `;
