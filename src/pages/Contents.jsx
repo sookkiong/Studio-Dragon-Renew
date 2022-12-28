@@ -6,13 +6,18 @@ const Contents = () => {
   const [category, setCategory] = useState("방영작 전체");
   const [on, setOn] = useState(false);
   const [poster, setPoster] = useState("all");
+  const [infoOn, setInfoOn] = useState(false);
+
   const onItem = () => {
     const id = on === true ? "arrow" : undefined;
     return id;
   };
+  const handleOn = () => {
+    setInfoOn(false);
+  };
 
   return (
-    <>
+    <div onMouseOver={handleOn}>
       <PageTop>
         <TopTextbox>
           <PageTitle>CONTENTS</PageTitle>
@@ -25,17 +30,11 @@ const Contents = () => {
 
       <ContentsWrap>
         <ContentsTop>
-          <div style={{ position: "absolute", left: "0", lineHeight: "50px" }}>
+          <Introduction>
             스튜디오 드래곤의 웰메이드 작품들을 한눈에 볼 수 있습니다.
-          </div>
-          <div
-            style={{
-              width: "220px",
-              position: "absolute",
-              right: "0",
-              zIndex: "10",
-            }}
-          >
+          </Introduction>
+
+          <CategoryWrap>
             <ItemText id={onItem()} onClick={() => setOn(!on)}>
               {category}
             </ItemText>
@@ -70,20 +69,40 @@ const Contents = () => {
                 </Item>
               </Categorys>
             ) : undefined}
-          </div>
+          </CategoryWrap>
         </ContentsTop>
 
         <PosterWrap>
           {poster === "all"
             ? Works.map((value) => {
-                return <Work bg={value.id}></Work>;
+                return (
+                  <Work bg={value.id} onMouseOver={() => setInfoOn(true)}>
+                    {infoOn === true ? (
+                      <WorkInfoBox>
+                        <OnairBox>{value.onAir}</OnairBox>
+                        <TitleBox>{value.title}</TitleBox>
+                        <Peoples id="actor">출연: {value.actors}</Peoples>
+                        <Peoples id="pd">연출: {value.producer}</Peoples>
+                      </WorkInfoBox>
+                    ) : undefined}
+                  </Work>
+                );
               })
             : Works.filter((work) => work.onAir === poster).map((value) => {
-                return <Work bg={value.id}></Work>;
+                return (
+                  <Work bg={value.id}>
+                    <WorkInfoBox>
+                      <OnairBox>{value.onAir}</OnairBox>
+                      <TitleBox>{value.title}</TitleBox>
+                      <Peoples id="actor">출연: {value.actors}</Peoples>
+                      <Peoples id="pd">연출: {value.producer}</Peoples>
+                    </WorkInfoBox>
+                  </Work>
+                );
               })}
         </PosterWrap>
       </ContentsWrap>
-    </>
+    </div>
   );
 };
 
@@ -119,6 +138,17 @@ const ContentsWrap = styled.div`
 const ContentsTop = styled.div`
   position: relative;
   height: 50px;
+`;
+const Introduction = styled.div`
+  position: absolute;
+  left: 0;
+  line-height: 50px;
+`;
+const CategoryWrap = styled.div`
+  width: 220px;
+  position: absolute;
+  right: 0;
+  z-index: 10;
 `;
 const ItemText = styled.div`
   padding: 10px 120px 10px 15px;
@@ -160,4 +190,37 @@ const Work = styled.div`
   background: url("/img/wc${(props) => props.bg}.jpg") no-repeat center center;
   background-size: cover;
   cursor: pointer;
+  position: relative;
+`;
+const WorkInfoBox = styled.div`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 200px;
+  background-color: rgba(0, 56, 123, 0.5);
+  color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 5;
+`;
+const OnairBox = styled.span`
+  border: 1px solid #fff;
+  text-align: center;
+  display: block;
+  width: 35%;
+  padding: 5px 0;
+  font-weight: 300;
+`;
+const TitleBox = styled.span`
+  display: block;
+  font-size: 26px;
+  padding: 10px 0;
+  font-weight: 500;
+`;
+const Peoples = styled.span`
+  display: block;
+  font-weight: 300;
+  &#actor {
+    margin-bottom: 5px;
+  }
 `;
