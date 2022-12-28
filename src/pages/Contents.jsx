@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { Works } from "../components/Contents";
 
 const Contents = () => {
   const [category, setCategory] = useState("방영작 전체");
   const [on, setOn] = useState(false);
+  const [poster, setPoster] = useState("all");
   const onItem = () => {
     const id = on === true ? "arrow" : undefined;
     return id;
@@ -34,6 +36,7 @@ const Contents = () => {
                   onClick={() => {
                     setCategory("방영작 전체");
                     setOn(!on);
+                    setPoster("all");
                   }}
                 >
                   방영작 전체
@@ -42,14 +45,16 @@ const Contents = () => {
                   onClick={() => {
                     setCategory("방영 중");
                     setOn(!on);
+                    setPoster("방영 중");
                   }}
                 >
                   방영 중
                 </Item>
                 <Item
                   onClick={() => {
-                    setCategory("종영 작");
+                    setCategory("종영작");
                     setOn(!on);
+                    setPoster("종영작");
                   }}
                 >
                   종영 작
@@ -58,6 +63,16 @@ const Contents = () => {
             ) : undefined}
           </div>
         </ContentsTop>
+
+        <div>
+          {poster === "all"
+            ? Works.map((value) => {
+                return <div>{value.title}</div>;
+              })
+            : Works.filter((work) => work.onAir === poster).map((value) => {
+                return <div>{value.title}</div>;
+              })}
+        </div>
       </ContentsWrap>
     </>
   );
