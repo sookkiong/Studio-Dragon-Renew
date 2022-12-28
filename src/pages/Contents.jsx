@@ -16,6 +16,12 @@ const Contents = () => {
     setInfoOn(false);
   };
 
+  const filteredWorks = () => {
+    let result = [...Works];
+    if (poster === "all") return result;
+    else return result.filter((value) => value.onAir === poster);
+  };
+
   return (
     <div onMouseOver={handleOn}>
       <PageTop>
@@ -73,33 +79,27 @@ const Contents = () => {
         </ContentsTop>
 
         <PosterWrap>
-          {poster === "all"
-            ? Works.map((value) => {
-                return (
-                  <Work bg={value.id} onMouseOver={() => setInfoOn(true)}>
-                    {infoOn === true ? (
-                      <WorkInfoBox>
-                        <OnairBox>{value.onAir}</OnairBox>
-                        <TitleBox>{value.title}</TitleBox>
-                        <Peoples id="actor">출연: {value.actors}</Peoples>
-                        <Peoples id="pd">연출: {value.producer}</Peoples>
-                      </WorkInfoBox>
-                    ) : undefined}
-                  </Work>
-                );
-              })
-            : Works.filter((work) => work.onAir === poster).map((value) => {
-                return (
-                  <Work bg={value.id}>
-                    <WorkInfoBox>
-                      <OnairBox>{value.onAir}</OnairBox>
-                      <TitleBox>{value.title}</TitleBox>
-                      <Peoples id="actor">출연: {value.actors}</Peoples>
-                      <Peoples id="pd">연출: {value.producer}</Peoples>
-                    </WorkInfoBox>
-                  </Work>
-                );
-              })}
+          {filteredWorks().map((value) => {
+            return (
+              <Work
+                bg={value.id}
+                key={value.id}
+                onMouseOver={(e) => {
+                  e.stopPropagation();
+                  setInfoOn(value.id);
+                }}
+              >
+                {infoOn === value.id ? (
+                  <WorkInfoBox>
+                    <OnairBox>{value.onAir}</OnairBox>
+                    <TitleBox>{value.title}</TitleBox>
+                    <Peoples id="actor">출연: {value.actors}</Peoples>
+                    <Peoples id="pd">연출: {value.producer}</Peoples>
+                  </WorkInfoBox>
+                ) : undefined}
+              </Work>
+            );
+          })}
         </PosterWrap>
       </ContentsWrap>
     </div>
