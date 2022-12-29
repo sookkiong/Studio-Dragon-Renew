@@ -1,25 +1,50 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { menuOnState } from "../store/MenuAtom";
+import { useRecoilState } from "recoil";
 
 const HamMenu = () => {
   let navigate = useNavigate();
+  const [menuOn, setMenuOn] = useRecoilState(menuOnState);
+
   return (
     <Wrapper>
       <Inner>
-        <CloseBtn></CloseBtn>
+        <CloseBtn onClick={() => setMenuOn(false)}></CloseBtn>
 
         <MenuWrap>
           <Category>
             <PageTitle>COMPANY</PageTitle>
             <MenuList>
-              <Menu>ABOUT</Menu>
-              <Menu>CONTACT</Menu>
+              <Menu
+                onClick={() => {
+                  navigate("/about");
+                  setMenuOn(false);
+                }}
+              >
+                ABOUT
+              </Menu>
+              <Menu
+                onClick={() => {
+                  navigate("/contact");
+                  setMenuOn(false);
+                }}
+              >
+                CONTACT
+              </Menu>
             </MenuList>
           </Category>
           <Category>
             <PageTitle>WORKS</PageTitle>
             <MenuList>
-              <Menu>CONTENTS</Menu>
+              <Menu
+                onClick={() => {
+                  navigate("/contents");
+                  setMenuOn(false);
+                }}
+              >
+                CONTENTS
+              </Menu>
             </MenuList>
           </Category>
           <Category>

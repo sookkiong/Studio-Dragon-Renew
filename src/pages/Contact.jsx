@@ -44,7 +44,8 @@ const LeftIMG = styled.div`
 `;
 const RightPart = styled.div`
   width: 58%;
-  background: url("/img/map.png") no-repeat 80% 60%;
+  background: url("/img/map.png") no-repeat 80% 50%;
+  margin-top: 60px;
 `;
 const Text = styled.span`
   display: block;
