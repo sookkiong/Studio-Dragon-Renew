@@ -37,7 +37,7 @@ export const Works = [
   {
     id: "6",
     onAir: "종영작",
-    title: "배드앤크레이지",
+    title: "배드 앤 크레이지",
     actors: "이동욱, 위하준 외",
     producer: "유선동",
   },

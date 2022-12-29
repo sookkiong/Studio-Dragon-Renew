@@ -1,14 +1,17 @@
 import styled from "styled-components";
 import { langOnState } from "../store/LangAtom";
 import { useRecoilState } from "recoil";
+import HamMenu from "./Mainmenu";
+import { useState } from "react";
 
 const Header = ({ id }) => {
   const [lang, setLang] = useRecoilState(langOnState);
+  const [menuOn, setMenuOn] = useState(false);
 
   return (
     <Wrapper id={id}>
       <HeaderWrap>
-        <Menu id={id} />
+        <Menu id={id} onClick={() => setMenuOn(true)} />
         <Logo id={id} />
         <Lang>
           <List
@@ -25,6 +28,8 @@ const Header = ({ id }) => {
             ENG
           </List>
         </Lang>
+
+        {menuOn ? <HamMenu /> : undefined}
       </HeaderWrap>
     </Wrapper>
   );
