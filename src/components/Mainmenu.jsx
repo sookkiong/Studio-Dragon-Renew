@@ -1,11 +1,10 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { menuOnState } from "../store/MenuAtom";
-import { useRecoilState } from "recoil";
-
+import { useSetRecoilState } from "recoil";
 const HamMenu = () => {
   let navigate = useNavigate();
-  const [menuOn, setMenuOn] = useRecoilState(menuOnState);
+  const setMenuOn = useSetRecoilState(menuOnState);
 
   return (
     <Wrapper>

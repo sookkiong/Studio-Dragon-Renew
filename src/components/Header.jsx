@@ -3,8 +3,8 @@ import { langOnState } from "../store/LangAtom";
 import { menuOnState } from "../store/MenuAtom";
 import { useRecoilState } from "recoil";
 import HamMenu from "./Mainmenu";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Header = ({ id }) => {
   const [lang, setLang] = useRecoilState(langOnState);
@@ -31,7 +31,6 @@ const Header = ({ id }) => {
             ENG
           </List>
         </Lang>
-
         {menuOn ? <HamMenu /> : undefined}
       </HeaderWrap>
     </Wrapper>

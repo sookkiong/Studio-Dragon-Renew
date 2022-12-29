@@ -1,12 +1,14 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { Works } from "../components/Contents";
+import { useNavigate } from "react-router-dom";
 
 const Contents = () => {
   const [category, setCategory] = useState("방영작 전체");
   const [on, setOn] = useState(false);
   const [poster, setPoster] = useState("all");
   const [infoOn, setInfoOn] = useState(false);
+  let navigate = useNavigate();
 
   const onItem = () => {
     const id = on === true ? "arrow" : undefined;
@@ -88,6 +90,7 @@ const Contents = () => {
                   e.stopPropagation();
                   setInfoOn(value.id);
                 }}
+                onClick={() => navigate(`/contents/detail?id=${value.id}`)}
               >
                 {infoOn === value.id ? (
                   <WorkInfoBox>

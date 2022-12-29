@@ -6,6 +6,7 @@ import GlobalStyle from "./GlobalStyle";
 import Footer from "./components/Footer";
 import Contact from "./pages/Contact";
 import Contents from "./pages/Contents";
+import ContentBox from "./pages/ContentsIn";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<BlackLayout />}>
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
+            <Route path="contents/detail" element={<ContentBox />} />
           </Route>
           <Route path="/" element={<WhiteLayout />}>
             <Route path="contents" element={<Contents />} />
