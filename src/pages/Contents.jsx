@@ -17,6 +17,9 @@ const Contents = () => {
   const handleOn = () => {
     setInfoOn(false);
   };
+  const categoryOff = () => {
+    setOn(false);
+  };
 
   const filteredWorks = () => {
     let result = [...Works];
@@ -25,7 +28,7 @@ const Contents = () => {
   };
 
   return (
-    <div onMouseOver={handleOn}>
+    <div onMouseOver={handleOn} onClick={categoryOff}>
       <PageTop>
         <TopTextbox>
           <PageTitle>CONTENTS</PageTitle>
@@ -43,7 +46,13 @@ const Contents = () => {
           </Introduction>
 
           <CategoryWrap>
-            <ItemText id={onItem()} onClick={() => setOn(!on)}>
+            <ItemText
+              id={onItem()}
+              onClick={(e) => {
+                e.stopPropagation();
+                setOn(!on);
+              }}
+            >
               {category}
             </ItemText>
             {on === true ? (

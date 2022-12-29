@@ -7,7 +7,17 @@ export const Works = [
     producer: "안길호, 김은숙",
     summary:
       "유년 시절 폭력으로 영혼까지 부서진 한 여자가 온 생을 걸어 치밀하게 준비한 처절한 복수와 그 소용돌이에 빠져드는 이들의 이야기",
-    videoURL: "https://www.youtube.com/watch?v=YQtgHb8tkYM",
+    videoURL: (
+      <iframe
+        width="700"
+        height="400"
+        src="https://www.youtube.com/embed/YQtgHb8tkYM"
+        title="더 글로리 | 공식 예고편 | 넷플릭스"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    ),
     scenario: "김은숙",
     coProduction: "넷플릭스",
     info: "NETFLIX 12월 30일 공개",
@@ -51,7 +61,17 @@ export const Works = [
     producer: "박준화, 배현진",
     summary:
       "역사에도 지도에도 존재하지 않은 가상의 국가 ‘대호국’을 배경으로, 영혼을 바꾸는 '환혼술'로 인해 운명이 비틀린 주인공들이 이를 극복하고 성장해가는 판타지 로맨스 활극",
-    videoURL: "https://www.youtube.com/watch?v=yOAvzKhV578",
+    videoURL: (
+      <iframe
+        width="700"
+        height="400"
+        src="https://www.youtube.com/embed/yOAvzKhV578"
+        title="[메이킹] 로맨스, 액션! 그리고 웃음까지 담당하는 '환혼즈'의 비하인드#환혼빛과그림자 EP.6"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    ),
     scenario: "홍정은, 홍미란",
     coProduction: "문화창고",
     info: "tvN (토,일) 밤 9시 10분",
@@ -95,7 +115,17 @@ export const Works = [
     producer: "김형식",
     summary:
       "내 자식들을 위해 기품 따윈 버렸다! 사고뭉치 왕자들을 위해 치열한 왕실 교육 전쟁에 뛰어드는 중전의 파란만장 궁중 분투기",
-    videoURL: "https://www.youtube.com/watch?v=00BORI6E-q4",
+    videoURL: (
+      <iframe
+        width="700"
+        height="400"
+        src="https://www.youtube.com/embed/00BORI6E-q4"
+        title="[#궁중일기] 아픈 세자와 계성대군의 비밀을 지키기 위한 화령의 고군분투 #EP03 #슈룹 EP.3"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    ),
     scenario: "박바라",
     coProduction: "하우 픽쳐스",
     info: "tnN (토,일) 밤 9시 10분",
@@ -132,7 +162,17 @@ export const Works = [
     producer: "김선태, 김범래",
     summary:
       "1998년, 시대에게 꿈을 빼앗긴 청춘들의 방황과 성장을 그린 청량 청춘 케미스트리",
-    videoURL: "https://www.youtube.com/watch?v=yhY83oqBzZ8&feature=emb_logo",
+    videoURL: (
+      <iframe
+        width="700"
+        height="400"
+        src="https://www.youtube.com/embed/yhY83oqBzZ8"
+        title="[하이라이트] 김태리x남주혁x보나x최현욱x이주명, 1998년 청춘들이 옵니다♡ #스물다섯스물하나 EP.1"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    ),
     scenario: "권도은",
     coProduction: "화앤담 픽쳐스",
     info: "tnN (토,일) 밤 9시 15분",
@@ -202,7 +242,17 @@ export const Works = [
     producer: "문석환, 오광희",
     summary:
       "병원을 배경으로 한 메디컬 장르에 의사가 귀신(고스트)인 이야기를 접목한, 근데 하필 그 귀신이 뛰어난 의술을 가진 금손 의사에, 근데 하필 그 귀신이 빙의하는 존재가 손 하나 까딱 못하는 똥손 의사라 더 흥미진진한, 고스트+메디컬 드라마",
-    videoURL: "https://www.youtube.com/watch?v=xmhmCzDJjto",
+    videoURL: (
+      <iframe
+        width="700"
+        height="400"
+        src="https://www.youtube.com/embed/xmhmCzDJjto"
+        title="[김범x손나은🐶😺] 이만큼 잘 어울리는 댕냥 조합 봤음? 근데, 댕냥 조합은 필승 조합 아닌가여? ｜#대신해드립니다 #고스트닥터"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    ),
     scenario: "김선수",
     coProduction: "본팩토리",
     info: "tvN (월, 화) 밤 10시 30분",
@@ -246,7 +296,17 @@ export const Works = [
     producer: "유선동",
     summary:
       "병원을 배경으로 한 메디컬 장르에 의사가 귀신(고스트)인 이야기를 접목한, 근데 하필 그 귀신이 뛰어난 의술을 가진 금손 의사에, 근데 하필 그 귀신이 빙의하는 존재가 손 하나 까딱 못하는 똥손 의사라 더 흥미진진한, 고스트+메디컬 드라마",
-    videoURL: "https://www.youtube.com/watch?v=uKJI-Rwx2oA&feature=emb_logo",
+    videoURL: (
+      <iframe
+        width="700"
+        height="400"
+        src="https://www.youtube.com/embed/uKJI-Rwx2oA"
+        title="[메인예고] ♨화끈통쾌한 4인4색 팀플레이♨ (ft.쓰레기 처단) #배드앤크레이지 EP.0"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    ),
     scenario: "김새봄",
     coProduction: "밍크엔터테인먼트",
     info: "tvN (월, 화) 밤 10시 30분",
