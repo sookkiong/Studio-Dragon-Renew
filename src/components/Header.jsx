@@ -41,6 +41,7 @@ export default Header;
 
 const Wrapper = styled.div`
   width: 100%;
+  z-index: 100;
   &#white {
     position: absolute;
   }

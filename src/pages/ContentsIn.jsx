@@ -1,13 +1,19 @@
 import { Works } from "../components/Contents";
 import { useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const ContentBox = () => {
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
   const work = Works.find((element) => element.id === id);
   const [onChar, setOnChar] = useState(id + "-1");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
 
   return (
     <>
@@ -86,6 +92,8 @@ const ContentBox = () => {
           {work.character.find((element) => element.photo === onChar).about}
         </ExplainBox>
       </CharacterBox>
+
+      <GoList onClick={() => navigate(-1)}>목록으로</GoList>
     </>
   );
 };
@@ -168,7 +176,7 @@ const CBTitle = styled.div`
   padding-bottom: 20px;
   font-weight: 500;
   border-bottom: 3px solid #003371;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
 `;
 const CBInner = styled.div`
   display: flex;
@@ -195,10 +203,23 @@ const CharHover = styled.div`
   color: #fff;
 `;
 const ExplainBox = styled.div`
-  margin: 30px 0 100px;
+  margin: 50px 0 100px;
   border: 1px solid #003371;
   display: flex;
   align-items: center;
   height: 140px;
   padding: 0 30px;
+`;
+const GoList = styled.button`
+  display: block;
+  padding: 10px 30px;
+  margin: 0 auto 100px;
+  background: none;
+  border: 1px solid #003371;
+  font-weight: 600;
+  cursor: pointer;
+  &:hover {
+    background: #003371;
+    color: #fff;
+  }
 `;
