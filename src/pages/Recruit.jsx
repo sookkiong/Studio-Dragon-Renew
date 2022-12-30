@@ -32,17 +32,46 @@ const Recruit = () => {
                 <InText>
                   <Name>{value.name}</Name>
                   <Explain>{value.explain}</Explain>
-                  <div>
-                    <div>+</div>
+                  <CountWrap>
+                    <Plus>+</Plus>
                     <div>
-                      <span>{value.num}</span>건
+                      <span id="yellow" style={{ fontSize: "30px" }}>
+                        {value.num}
+                      </span>
+                      건
                     </div>
-                  </div>
+                  </CountWrap>
                 </InText>
               </List>
             );
           })}
         </Ul>
+
+        <div>
+          <Notice>
+            <NoticeTitle>지원방법</NoticeTitle>
+            <div style={{ lineHeight: "30px" }}>
+              진행 중인 채용공고 중 원하시는 직무를 확인하시면 입사 지원이
+              가능합니다.
+              <br />
+              상세한 채용 정보는 cj그룹 채용사이트에서 확인하실 수 있습니다.
+            </div>
+          </Notice>
+
+          <Notice>
+            <NoticeTitle>유의사항</NoticeTitle>
+            <div style={{ lineHeight: "30px" }}>
+              - 이력서 및 자기소개서에 기재된 사항이 허위임이 판명될 경우 합격이
+              취소될 수 있습니다.
+              <br />
+              - 제출된 지원서는 심사를 위해서만 활용되며, 최종 합격발표일로부터
+              90일 이내에 회사에서 오프라인으로 제출을 요구한 서류에 한하여 반환
+              청구를 할 수 있습니다.
+              <br />- 면접은 서류 심사 통과자에 한해 개별통보 드리며, 장애/보훈
+              대상자는 관계법령에 의거하여 우대합니다.
+            </div>
+          </Notice>
+        </div>
       </ListWrap>
     </>
   );
@@ -80,21 +109,26 @@ const TitleText = styled.div`
 `;
 const ListWrap = styled.div`
   width: 68%;
-  margin: 80px auto 0;
+  margin: 80px auto;
 `;
 const Ul = styled.ul`
   list-style: none;
-  margin: 0;
+  margin: 50px 0;
   padding: 0;
   display: flex;
   justify-content: space-between;
-  margin-top: 50px;
 `;
 const List = styled.li`
   width: 320px;
   height: 320px;
   background: url("/img/r${(props) => props.bg}.jpg") no-repeat center center;
   background-size: cover;
+  cursor: pointer;
+  &:hover {
+    #yellow {
+      color: yellow;
+    }
+  }
 `;
 const InText = styled.div`
   background-color: rgba(0, 56, 123, 0.3);
@@ -110,5 +144,37 @@ const InText = styled.div`
 `;
 const Name = styled.div`
   font-size: 26px;
+  font-weight: 500;
 `;
-const Explain = styled.div``;
+const Explain = styled.div`
+  margin: 10px 0 50px;
+  font-weight: 300;
+  text-align: justify;
+`;
+const CountWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+const Plus = styled.div`
+  font-size: 30px;
+  font-weight: 100;
+  border: 1px solid #fff;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 28px;
+`;
+const Notice = styled.div`
+  margin-bottom: 30px;
+`;
+const NoticeTitle = styled.div`
+  padding: 3px 13px;
+  border-left: 3px solid #003371;
+  font-size: 18px;
+  margin-bottom: 10px;
+`;
+const NoticeContent = styled.div`
+  line-height: 20px;
+`;
