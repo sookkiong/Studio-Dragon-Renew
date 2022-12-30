@@ -81,6 +81,10 @@ const ContentBox = () => {
             );
           })}
         </CBInner>
+
+        <ExplainBox>
+          {work.character.find((element) => element.photo === onChar).about}
+        </ExplainBox>
       </CharacterBox>
     </>
   );
@@ -189,4 +193,12 @@ const CharHover = styled.div`
   justify-content: center;
   align-items: center;
   color: #fff;
+`;
+const ExplainBox = styled.div`
+  margin: 30px 0 100px;
+  border: 1px solid #003371;
+  display: flex;
+  align-items: center;
+  height: 140px;
+  padding: 0 30px;
 `;
