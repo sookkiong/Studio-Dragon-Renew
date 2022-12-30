@@ -1,12 +1,13 @@
 import { Works } from "../components/Contents";
 import { useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 
 const ContentBox = () => {
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
   const work = Works.find((element) => element.id === id);
+  const [onChar, setOnChar] = useState(id + "-1");
 
   return (
     <>
@@ -25,10 +26,62 @@ const ContentBox = () => {
 
       <AboutStory>
         <Summary>{work.summary}</Summary>
-        <div>
-          <div>{work.videoURL}</div>
-        </div>
+
+        <VideoNInfo>
+          <Video>{work.videoURL}</Video>
+          <WorkInfo>
+            <Tr>
+              <Th>연출</Th>
+              <Td>{work.producer}</Td>
+            </Tr>
+            <Tr>
+              <Th>극본</Th>
+              <Td>{work.scenario}</Td>
+            </Tr>
+            <Tr>
+              <Th>공동제작</Th>
+              <Td>{work.coProduction}</Td>
+            </Tr>
+            <Tr>
+              <Th>출연</Th>
+              <Td>{work.actors}</Td>
+            </Tr>
+            <Tr>
+              <Th>채널정보</Th>
+              <Td>{work.info}</Td>
+            </Tr>
+            <Tr>
+              <Th>방영기간</Th>
+              <Td>{work.period}</Td>
+            </Tr>
+          </WorkInfo>
+        </VideoNInfo>
       </AboutStory>
+
+      <CharacterBox>
+        <CBTitle>인물소개</CBTitle>
+
+        <CBInner>
+          {work.character.map((value, key) => {
+            return (
+              <>
+                <Character
+                  bg={value.photo}
+                  key={id}
+                  onMouseOver={() => setOnChar(value.photo)}
+                >
+                  {onChar === value.photo ? (
+                    <CharHover>
+                      <div style={{ fontSize: "28px" }}>{value.name}</div>
+                      <div>{value.who}</div>
+                    </CharHover>
+                  ) : undefined}
+                </Character>
+              </>
+            );
+          })}
+        </CBInner>
+      </CharacterBox>
     </>
   );
 };
@@ -76,4 +129,64 @@ const Summary = styled.div`
   padding: 10px 0 10px 20px;
   font-weight: 500;
   margin-bottom: 60px;
+`;
+const VideoNInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`;
+const Video = styled.div`
+  width: 50%;
+`;
+const WorkInfo = styled.div`
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-top: 3px solid #003371;
+  border-bottom: 3px solid #003371;
+  box-sizing: border-box;
+`;
+const Tr = styled.tr`
+  padding: 15px 0;
+`;
+const Th = styled.th`
+  width: 100px;
+  text-align: left;
+`;
+const Td = styled.td``;
+const CharacterBox = styled.div`
+  width: 70%;
+  margin: 0 auto;
+`;
+const CBTitle = styled.div`
+  font-size: 20px;
+  padding-bottom: 20px;
+  font-weight: 500;
+  border-bottom: 3px solid #003371;
+  margin-bottom: 30px;
+`;
+const CBInner = styled.div`
+  display: flex;
+`;
+const Character = styled.div`
+  background: url("/img/char${(props) => props.bg}.jpg") no-repeat center center;
+  background-size: cover;
+  width: 260px;
+  height: 260px;
+  margin-right: 50px;
+  position: relative;
+  cursor: pointer;
+`;
+const CharHover = styled.div`
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 56, 123, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
 `;
