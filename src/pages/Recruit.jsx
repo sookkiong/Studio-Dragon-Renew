@@ -2,11 +2,10 @@ import styled from "styled-components";
 import { category } from "../components/Recruit";
 import { useState } from "react";
 import { recruitList } from "../components/Recruit";
-import { redirect } from "react-router";
 
 const Recruit = () => {
-  const [onBG, setOnBG] = useState(false);
   const [inRecruit, setInRecruit] = useState("");
+  const [hover, setHover] = useState("");
 
   const closeModal = () => {
     setInRecruit("");
@@ -116,51 +115,35 @@ const Recruit = () => {
                 const colored = isNaN(value.deadLine) ? undefined : "red";
 
                 return (
-                  <WrapUL>
-                    <Item
-                      id={value.id % 4 === 0 ? "notMargin" : null}
-                      key={value.id}
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          marginBottom: "15px",
-                        }}
+                  <Item
+                    id={hover === value.id ? "onHover" : undefined}
+                    className={value.id % 4 === 0 ? "notMargin" : undefined}
+                    key={value.id}
+                    onClick={(e) => e.stopPropagation()}
+                    onMouseOver={() => setHover(value.id)}
+                    onMouseLeave={() => setHover("")}
+                  >
+                    <ItemTop>
+                      <TypeBox id={hover === value.id ? "onHover" : undefined}>
+                        {setName(value.type)}
+                      </TypeBox>
+                      <Deadline
+                        id={
+                          colored === "red"
+                            ? "red"
+                            : hover === value.id
+                            ? "onHover"
+                            : undefined
+                        }
                       >
-                        <div
-                          style={{
-                            border: "1px solid #000",
-                            padding: "3px 20px",
-                            fontWeight: "600",
-                          }}
-                        >
-                          {setName(value.type)}
-                        </div>
-                        <div
-                          style={{
-                            fontWeight: "600",
-                            color: colored === "red" ? "red" : "#003371",
-                          }}
-                        >
-                          {deadLine}
-                        </div>
-                      </div>
-                      <div
-                        style={{
-                          width: "100%",
-                          borderBottom: "1px solid #000",
-                          paddingBottom: "15px",
-                          marginBottom: "15px",
-                        }}
-                      >
-                        {value.title}
-                      </div>
-                      <div style={{ textAlign: "right" }}>{value.start}</div>
-                    </Item>
-                  </WrapUL>
+                        {deadLine}
+                      </Deadline>
+                    </ItemTop>
+                    <TitleBox id={hover === value.id ? "onHover" : undefined}>
+                      {value.title}
+                    </TitleBox>
+                    <StartTime>{value.start}</StartTime>
+                  </Item>
                 );
               })}
             <CloseBTN onClick={() => setInRecruit("")}></CloseBTN>
@@ -281,26 +264,21 @@ const DetailIn = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const WrapUL = styled.ul`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-`;
 const Item = styled.li`
   width: 100%;
   padding: 20px;
+  list-style: none;
   box-sizing: border-box;
   background-color: #fff;
   margin-bottom: 20px;
-  &#notMargin {
-    margin: 0;
-  }
   cursor: pointer;
+  &.notMargin {
+    margin-bottom: 0;
+  }
+  &#onHover {
+    background-color: #003371;
+    color: #fff;
+  }
 `;
 const CloseBTN = styled.button`
   width: 30px;
@@ -312,4 +290,40 @@ const CloseBTN = styled.button`
   background-size: contain;
   border: none;
   cursor: pointer;
+`;
+const ItemTop = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+`;
+const TypeBox = styled.div`
+  border: 1px solid #000;
+  padding: 3px 20px;
+  font-weight: 600;
+  &#onHover {
+    border: 1px solid #fff;
+  }
+`;
+const Deadline = styled.div`
+  font-weight: 600;
+  color: navy;
+  &#red {
+    color: red;
+  }
+  &#onHover {
+    color: #fff;
+  }
+`;
+const TitleBox = styled.div`
+  width: 100%;
+  border-bottom: 1px solid #000;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+  &#onHover {
+    border-bottom: 1px solid #fff;
+  }
+`;
+const StartTime = styled.div`
+  text-align: right;
 `;
