@@ -2,13 +2,26 @@ import styled from "styled-components";
 import { category } from "../components/Recruit";
 import { useState } from "react";
 import { recruitList } from "../components/Recruit";
+import { redirect } from "react-router";
 
 const Recruit = () => {
   const [onBG, setOnBG] = useState(false);
   const [inRecruit, setInRecruit] = useState("");
 
+  const closeModal = () => {
+    setInRecruit("");
+  };
+  const setName = (string) => {
+    if (string === "new") {
+      return "신입";
+    } else if (string === "career") {
+      return "경력";
+    } else {
+      return "인턴";
+    }
+  };
   return (
-    <>
+    <div onClick={closeModal}>
       <PageTop>
         <BlackBG />
         <TextBox>
@@ -36,10 +49,13 @@ const Recruit = () => {
               <List
                 bg={value.id}
                 key={value.id}
-                onClick={() => setInRecruit(value.type)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setInRecruit(value.type);
+                }}
               >
                 <InText>
-                  <Name>{value.type}</Name>
+                  <Name>{setName(value.type)}</Name>
                   <Explain>{value.explain}</Explain>
                   <CountWrap>
                     <Plus>+</Plus>
@@ -85,27 +101,73 @@ const Recruit = () => {
 
       {inRecruit !== "" ? (
         <DetailIn>
-          {recruitList
-            .filter((list) => list.type === inRecruit)
-            .map((value) => {
-              const deadLine = isNaN(value.deadLine)
-                ? value.deadLine
-                : "D-" + value.deadLine;
+          <div
+            style={{
+              position: "relative",
+              width: "40%",
+            }}
+          >
+            {recruitList
+              .filter((list) => list.type === inRecruit)
+              .map((value) => {
+                const deadLine = isNaN(value.deadLine)
+                  ? value.deadLine
+                  : "D-" + value.deadLine;
+                const colored = isNaN(value.deadLine) ? undefined : "red";
 
-              return (
-                <ul>
-                  <li key={value.id}>
-                    <div>
-                      <div>{value.type}</div>
-                      <div>{deadLine}</div>
-                    </div>
-                  </li>
-                </ul>
-              );
-            })}
+                return (
+                  <WrapUL>
+                    <Item
+                      id={value.id % 4 === 0 ? "notMargin" : null}
+                      key={value.id}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          marginBottom: "15px",
+                        }}
+                      >
+                        <div
+                          style={{
+                            border: "1px solid #000",
+                            padding: "3px 20px",
+                            fontWeight: "600",
+                          }}
+                        >
+                          {setName(value.type)}
+                        </div>
+                        <div
+                          style={{
+                            fontWeight: "600",
+                            color: colored === "red" ? "red" : "#003371",
+                          }}
+                        >
+                          {deadLine}
+                        </div>
+                      </div>
+                      <div
+                        style={{
+                          width: "100%",
+                          borderBottom: "1px solid #000",
+                          paddingBottom: "15px",
+                          marginBottom: "15px",
+                        }}
+                      >
+                        {value.title}
+                      </div>
+                      <div style={{ textAlign: "right" }}>{value.start}</div>
+                    </Item>
+                  </WrapUL>
+                );
+              })}
+            <CloseBTN onClick={() => setInRecruit("")}></CloseBTN>
+          </div>
         </DetailIn>
       ) : null}
-    </>
+    </div>
   );
 };
 
@@ -215,4 +277,39 @@ const DetailIn = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const WrapUL = styled.ul`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+`;
+const Item = styled.li`
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: #fff;
+  margin-bottom: 20px;
+  &#notMargin {
+    margin: 0;
+  }
+  cursor: pointer;
+`;
+const CloseBTN = styled.button`
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  right: -60px;
+  top: 0;
+  background: url(/img/close_b.png) no-repeat center center;
+  background-size: contain;
+  border: none;
+  cursor: pointer;
 `;
