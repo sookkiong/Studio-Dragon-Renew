@@ -1,7 +1,12 @@
 import styled from "styled-components";
 import { category } from "../components/Recruit";
+import { useState } from "react";
+import { recruitList } from "../components/Recruit";
 
 const Recruit = () => {
+  const [onBG, setOnBG] = useState(false);
+  const [inRecruit, setInRecruit] = useState("");
+
   return (
     <>
       <PageTop>
@@ -26,11 +31,15 @@ const Recruit = () => {
           진행 중인 채용 공고
         </div>
         <Ul>
-          {category.map((value, key) => {
+          {category.map((value) => {
             return (
-              <List bg={value.id}>
+              <List
+                bg={value.id}
+                key={value.id}
+                onClick={() => setInRecruit(value.type)}
+              >
                 <InText>
-                  <Name>{value.name}</Name>
+                  <Name>{value.type}</Name>
                   <Explain>{value.explain}</Explain>
                   <CountWrap>
                     <Plus>+</Plus>
@@ -73,6 +82,29 @@ const Recruit = () => {
           </Notice>
         </div>
       </ListWrap>
+
+      {inRecruit !== "" ? (
+        <DetailIn>
+          {recruitList
+            .filter((list) => list.type === inRecruit)
+            .map((value) => {
+              const deadLine = isNaN(value.deadLine)
+                ? value.deadLine
+                : "D-" + value.deadLine;
+
+              return (
+                <ul>
+                  <li key={value.id}>
+                    <div>
+                      <div>{value.type}</div>
+                      <div>{deadLine}</div>
+                    </div>
+                  </li>
+                </ul>
+              );
+            })}
+        </DetailIn>
+      ) : null}
     </>
   );
 };
@@ -175,6 +207,12 @@ const NoticeTitle = styled.div`
   font-size: 18px;
   margin-bottom: 10px;
 `;
-const NoticeContent = styled.div`
-  line-height: 20px;
+const DetailIn = styled.div`
+  position: fixed;
+  z-index: 200;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
 `;

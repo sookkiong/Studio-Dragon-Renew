@@ -5,11 +5,12 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 const ContentBox = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const id = searchParams.get("id");
   const work = Works.find((element) => element.id === id);
+
   const [onChar, setOnChar] = useState(id + "-1");
-  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -68,12 +69,12 @@ const ContentBox = () => {
         <CBTitle>인물소개</CBTitle>
 
         <CBInner>
-          {work.character.map((value, key) => {
+          {work.character.map((value) => {
             return (
               <>
                 <Character
                   bg={value.photo}
-                  key={id}
+                  key={value.photo}
                   onMouseOver={() => setOnChar(value.photo)}
                 >
                   {onChar === value.photo ? (
