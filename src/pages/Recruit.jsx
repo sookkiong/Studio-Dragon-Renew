@@ -157,7 +157,7 @@ const Recruit = () => {
 export default Recruit;
 
 const PageTop = styled.div`
-  height: 600px;
+  height: 700px;
   background: url("/img/recruitbg.jpg") no-repeat center 70%;
   background-size: cover;
   display: flex;

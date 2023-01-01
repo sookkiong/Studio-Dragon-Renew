@@ -63,7 +63,14 @@ const HamMenu = () => {
           <Category>
             <PageTitle>NEWS</PageTitle>
             <MenuList>
-              <Menu>ARTICLES</Menu>
+              <Menu
+                onClick={() => {
+                  navigate("/article");
+                  setMenuOn(false);
+                }}
+              >
+                ARTICLES
+              </Menu>
             </MenuList>
           </Category>
         </MenuWrap>

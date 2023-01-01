@@ -8,6 +8,7 @@ import Contact from "./pages/Contact";
 import Contents from "./pages/Contents";
 import ContentBox from "./pages/ContentsIn";
 import Recruit from "./pages/Recruit";
+import Articles from "./pages/Articles";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<WhiteLayout />}>
             <Route path="contents" element={<Contents />} />
             <Route path="recruit" element={<Recruit />} />
+            <Route path="article" element={<Articles />} />
           </Route>
         </Routes>
         <Footer />
