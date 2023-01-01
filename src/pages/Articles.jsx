@@ -1,6 +1,17 @@
 import styled from "styled-components";
+import { ArticleList } from "../components/Article";
+import { useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Articles = () => {
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const title = searchParams.get("q");
+  const result = ArticleList.find((element) => element.title.includes(title));
+
+  console.log(search);
+  console.log(result);
   return (
     <>
       <PageTop>
@@ -13,7 +24,34 @@ const Articles = () => {
         </TextBox>
       </PageTop>
 
-      <div></div>
+      <ContentsWrap>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <div>
+            총 게시물 <span>{ArticleList.length}</span>, 페이지 <span></span>
+          </div>
+          <SearchBox>
+            <div>
+              <div></div>
+              <ul>
+                <li>제목+내용</li>
+                <li>제목</li>
+                <li>내용</li>
+              </ul>
+            </div>
+            <input type="text" onChange={(e) => setSearch(e.target.value)} />
+            <button onClick={() => navigate(`/article?q=${search}`)}>
+              검색
+            </button>
+          </SearchBox>
+        </div>
+        <div></div>
+      </ContentsWrap>
     </>
   );
 };
@@ -50,4 +88,11 @@ const PageExplain = styled.span`
   color: #fff;
   display: block;
   margin-top: 10px;
+`;
+const ContentsWrap = styled.div`
+  width: 70%;
+  margin: 0 auto;
+`;
+const SearchBox = styled.div`
+  display: flex;
 `;
