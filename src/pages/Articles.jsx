@@ -12,7 +12,7 @@ const Articles = () => {
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState("제목+내용");
   const [cateOn, setCateOn] = useState(false);
-  const [resultOn, setResultOn] = useState(false);
+  const [searchOn, setSearchOn] = useState(false);
 
   const turnArrow = () => {
     const id = cateOn === true ? "on" : undefined;
@@ -21,6 +21,7 @@ const Articles = () => {
   const enterOn = (e) => {
     if (e.keyCode === 13) {
       navigate(`/article?q=${search}`);
+      setSearchOn(true);
     }
   };
   const itemOff = () => {
@@ -40,10 +41,6 @@ const Articles = () => {
       return false;
     }
   };
-  /* const isThere = () => {
-    setResultOn(true);
-    return result.title;
-  }; */
 
   useEffect(() => {
     navigate(`/article?p=${page}`);
@@ -118,47 +115,56 @@ const Articles = () => {
               onKeyDown={(e) => enterOn(e)}
             />
 
-            <FindButton onClick={() => navigate(`/article?q=${search}`)}>
+            <FindButton
+              onClick={() => {
+                navigate(`/article?q=${search}`);
+                setSearchOn(true);
+              }}
+            >
               검색
             </FindButton>
           </SearchBox>
         </TopWrapper>
 
         <ContentsBox>
-          {result
-            ? undefined
-            : ArticleList.slice(0 + (page - 1) * 6, 6 + (page - 1) * 6).map(
+          {searchOn ? undefined : (
+            <div>
+              {ArticleList.slice(0 + (page - 1) * 6, 6 + (page - 1) * 6).map(
                 (value) => {
                   return <div>{value.title}</div>;
                 }
               )}
+              <button
+                disabled={prevOff()}
+                onClick={() => {
+                  setPage(page - 1);
+                  navigate(`/article?p=${page}`);
+                }}
+              >
+                이전 페이지
+              </button>
+              <button
+                disabled={nextOff()}
+                onClick={() => {
+                  setPage(page + 1);
+                  navigate(`/article?p=${page}`);
+                }}
+              >
+                다음 페이지
+              </button>
+            </div>
+          )}
 
-          {result
-            ? result.length > 0
-              ? result.map((value) => {
-                  return <div>{value.title}</div>;
-                })
-              : "검색값이 없습니다"
-            : undefined}
-
-          <button
-            disabled={prevOff()}
-            onClick={() => {
-              setPage(page - 1);
-              navigate(`/article?p=${page}`);
-            }}
-          >
-            이전 페이지
-          </button>
-          <button
-            disabled={nextOff()}
-            onClick={() => {
-              setPage(page + 1);
-              navigate(`/article?p=${page}`);
-            }}
-          >
-            다음 페이지
-          </button>
+          {searchOn ? (
+            <div>
+              {result.length > 0
+                ? result.map((value) => {
+                    return <div key={value.id}>{value.title}</div>;
+                  })
+                : `'${title}' 의` + " 검색값이 없습니다"}
+              <button>목록으로</button>
+            </div>
+          ) : undefined}
         </ContentsBox>
       </ContentsWrap>
     </div>
