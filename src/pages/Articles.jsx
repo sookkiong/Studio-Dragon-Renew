@@ -2,17 +2,17 @@ import styled from "styled-components";
 import { ArticleList } from "../components/Article";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { createBrowserHistory } from "history";
 
 const Articles = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [searchParams] = useSearchParams();
   const title = searchParams.get("q");
+  const result = ArticleList.filter((element) => element.title.includes(title));
   const [page, setPage] = useState(1);
-  const result = ArticleList.find((element) => element.title.includes(title));
   const [selected, setSelected] = useState("제목+내용");
   const [cateOn, setCateOn] = useState(false);
+  const [resultOn, setResultOn] = useState(false);
 
   const turnArrow = () => {
     const id = cateOn === true ? "on" : undefined;
@@ -40,14 +40,17 @@ const Articles = () => {
       return false;
     }
   };
+  /* const isThere = () => {
+    setResultOn(true);
+    return result.title;
+  }; */
+
   useEffect(() => {
     navigate(`/article?p=${page}`);
   }, [page]);
 
   console.log(search);
   console.log(result);
-  console.log(page);
-  console.log(prevOff());
 
   return (
     <div onClick={() => itemOff()}>
@@ -122,11 +125,21 @@ const Articles = () => {
         </TopWrapper>
 
         <ContentsBox>
-          {ArticleList.slice(0 + (page - 1) * 6, 6 + (page - 1) * 6).map(
-            (value) => {
-              return <div>{value.title}</div>;
-            }
-          )}
+          {result
+            ? undefined
+            : ArticleList.slice(0 + (page - 1) * 6, 6 + (page - 1) * 6).map(
+                (value) => {
+                  return <div>{value.title}</div>;
+                }
+              )}
+
+          {result
+            ? result.length > 0
+              ? result.map((value) => {
+                  return <div>{value.title}</div>;
+                })
+              : "검색값이 없습니다"
+            : undefined}
 
           <button
             disabled={prevOff()}
