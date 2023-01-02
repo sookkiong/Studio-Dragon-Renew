@@ -1,19 +1,56 @@
 import styled from "styled-components";
 import { ArticleList } from "../components/Article";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 const Articles = () => {
-  const [search, setSearch] = useState("");
   const navigate = useNavigate();
+  const [search, setSearch] = useState("");
   const [searchParams] = useSearchParams();
   const title = searchParams.get("q");
+  const [page, setPage] = useState(1);
   const result = ArticleList.find((element) => element.title.includes(title));
+  const [selected, setSelected] = useState("제목+내용");
+  const [cateOn, setCateOn] = useState(false);
+
+  const turnArrow = () => {
+    const id = cateOn === true ? "on" : undefined;
+    return id;
+  };
+  const enterOn = (e) => {
+    if (e.keyCode === 13) {
+      navigate(`/article?q=${search}`);
+    }
+  };
+  const itemOff = () => {
+    setCateOn(false);
+  };
+  const prevOff = () => {
+    if (page === 1) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  const nextOff = () => {
+    if (page === 2) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+  useEffect(() => {
+    navigate(`/article?p=${page}`);
+  }, [page]);
 
   console.log(search);
   console.log(result);
+  console.log(page);
+  console.log(prevOff());
+
   return (
-    <>
+    <div onClick={() => itemOff()}>
       <PageTop>
         <BlackBG />
         <TextBox>
@@ -25,34 +62,93 @@ const Articles = () => {
       </PageTop>
 
       <ContentsWrap>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <div>
-            총 게시물 <span>{ArticleList.length}</span>, 페이지 <span></span>
-          </div>
+        <TopWrapper>
+          <CountBox>
+            총 게시물 <span>{ArticleList.length}</span>, 페이지{" "}
+            <span>{page}</span>/2
+          </CountBox>
+
           <SearchBox>
-            <div>
-              <div></div>
-              <ul>
-                <li>제목+내용</li>
-                <li>제목</li>
-                <li>내용</li>
-              </ul>
-            </div>
-            <input type="text" onChange={(e) => setSearch(e.target.value)} />
-            <button onClick={() => navigate(`/article?q=${search}`)}>
+            <Category>
+              <SelectedItem
+                id={turnArrow()}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCateOn(!cateOn);
+                }}
+              >
+                {selected}
+              </SelectedItem>
+              {cateOn ? (
+                <Items>
+                  <Item
+                    onClick={() => {
+                      setSelected("제목+내용");
+                      setCateOn(false);
+                    }}
+                  >
+                    제목+내용
+                  </Item>
+                  <Item
+                    onClick={() => {
+                      setSelected("제목");
+                      setCateOn(false);
+                    }}
+                  >
+                    제목
+                  </Item>
+                  <Item
+                    onClick={() => {
+                      setSelected("내용");
+                      setCateOn(false);
+                    }}
+                  >
+                    내용
+                  </Item>
+                </Items>
+              ) : undefined}
+            </Category>
+
+            <Input
+              type="text"
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={(e) => enterOn(e)}
+            />
+
+            <FindButton onClick={() => navigate(`/article?q=${search}`)}>
               검색
-            </button>
+            </FindButton>
           </SearchBox>
-        </div>
-        <div></div>
+        </TopWrapper>
+
+        <ContentsBox>
+          {ArticleList.slice(0 + (page - 1) * 6, 6 + (page - 1) * 6).map(
+            (value) => {
+              return <div>{value.title}</div>;
+            }
+          )}
+
+          <button
+            disabled={prevOff()}
+            onClick={() => {
+              setPage(page - 1);
+              navigate(`/article?p=${page}`);
+            }}
+          >
+            이전 페이지
+          </button>
+          <button
+            disabled={nextOff()}
+            onClick={() => {
+              setPage(page + 1);
+              navigate(`/article?p=${page}`);
+            }}
+          >
+            다음 페이지
+          </button>
+        </ContentsBox>
       </ContentsWrap>
-    </>
+    </div>
   );
 };
 
@@ -76,6 +172,7 @@ const BlackBG = styled.div`
 `;
 const TextBox = styled.div`
   margin-top: 210px;
+  z-index: 1;
 `;
 const PageTitle = styled.span`
   display: block;
@@ -93,6 +190,70 @@ const ContentsWrap = styled.div`
   width: 70%;
   margin: 0 auto;
 `;
+const TopWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 100px;
+`;
+const CountBox = styled.div`
+  margin-top: 8px;
+`;
 const SearchBox = styled.div`
   display: flex;
+  position: relative;
+  width: 475px;
+  height: 100px;
+`;
+const Category = styled.div`
+  position: absolute;
+  z-index: 10;
+  width: 160px;
+  right: 290px;
+  left: 0;
+`;
+const SelectedItem = styled.div`
+  border: 1px solid #ccc;
+  padding: 8px 15px;
+  cursor: pointer;
+  background: url("/img/cate_g.png") no-repeat 90% center;
+  &#on {
+    background: url("/img/cate_g_on.png") no-repeat 90% center;
+  }
+`;
+const Items = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+`;
+const Item = styled.li`
+  padding: 8px 15px;
+  cursor: pointer;
+`;
+const Input = styled.input`
+  width: 200px;
+  position: absolute;
+  right: 75px;
+  padding: 12px 10px;
+  border: 1px solid #ccc;
+`;
+const FindButton = styled.button`
+  position: absolute;
+  right: 0;
+  padding: 11px 15px;
+  border: 1px solid #003371;
+  background-color: #003371;
+  color: #fff;
+  cursor: pointer;
+  &:hover {
+    background: #fff;
+    color: #003371;
+    font-weight: 600;
+  }
+`;
+
+const ContentsBox = styled.div`
+  border: 1px solid #000;
 `;
