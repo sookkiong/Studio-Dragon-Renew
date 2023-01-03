@@ -42,13 +42,7 @@ const Articles = () => {
     }
   };
   const borderStyle = (value) => {
-    if (value.id === ArticleList.length) {
-      return "last";
-    } else if (value.id % 3 == 1) {
-      return "one";
-    } else if (value.id % 3 == 2) {
-      return "two";
-    } else {
+    if (value % 3 == 0) {
       return "three";
     }
   };
@@ -145,7 +139,7 @@ const Articles = () => {
                   (value) => {
                     return (
                       <>
-                        <List id={borderStyle(value)} key={value.id}>
+                        <List id={borderStyle(value.id)} key={value.id}>
                           <ListInner id="blackBorder">
                             <PhotoBox bg={value.id}></PhotoBox>
                             <TitleBox>{value.title}</TitleBox>
@@ -160,7 +154,7 @@ const Articles = () => {
               </ArticleUL>
 
               <ButtonWrap>
-                <button
+                <GoPageBtn
                   disabled={prevOff()}
                   onClick={() => {
                     setPage(page - 1);
@@ -169,8 +163,8 @@ const Articles = () => {
                   }}
                 >
                   이전 페이지
-                </button>
-                <button
+                </GoPageBtn>
+                <GoPageBtn
                   disabled={nextOff()}
                   onClick={() => {
                     setPage(page + 1);
@@ -179,18 +173,31 @@ const Articles = () => {
                   }}
                 >
                   다음 페이지
-                </button>
+                </GoPageBtn>
               </ButtonWrap>
             </div>
           )}
 
           {searchOn ? (
             <div>
-              {result.length > 0
-                ? result.map((value) => {
-                    return <div key={value.id}>{value.title}</div>;
-                  })
-                : `'${title}' 의` + " 검색값이 없습니다"}
+              {result.length > 0 ? (
+                <ArticleUL>
+                  {result.map((value, index) => {
+                    return (
+                      <List id={borderStyle(index + 1)} key={value.id}>
+                        <ListInner id="blackBorder">
+                          <PhotoBox bg={value.id}></PhotoBox>
+                          <TitleBox>{value.title}</TitleBox>
+                          <SummaryBox>{value.summary}</SummaryBox>
+                          <DateBox>{value.date}</DateBox>
+                        </ListInner>
+                      </List>
+                    );
+                  })}
+                </ArticleUL>
+              ) : (
+                `'${title}' 의` + " 검색값이 없습니다"
+              )}
               <button onClick={() => setSearchOn(false)}>목록으로</button>
             </div>
           ) : undefined}
@@ -306,7 +313,7 @@ const ContentsBox = styled.div``;
 const ArticleUL = styled.ul`
   display: grid;
   grid-template-columns: 33.333% 33.333% 33.333%;
-  grid-template-rows: 520px 520px;
+
   list-style: none;
   margin: 0;
   padding: 0;
@@ -316,23 +323,16 @@ const ArticleUL = styled.ul`
 const List = styled.li`
   padding: 15px;
   box-sizing: border-box;
+  cursor: pointer;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   &:hover {
     #blackBorder {
       border: 1px solid #000;
     }
   }
-  &#one {
-    border-bottom: 1px solid #ccc;
-  }
-  &#two {
-    border: 1px solid #ccc;
-    border-top: none;
-  }
   &#three {
-    border-bottom: 1px solid #ccc;
-  }
-  &#last {
-    border-right: 1px solid #ccc;
+    border-right: none;
   }
 `;
 const ListInner = styled.div`
@@ -365,5 +365,23 @@ const DateBox = styled.div`
 `;
 const ButtonWrap = styled.div`
   text-align: center;
-  padding: 30px 0;
+  padding: 50px 0;
+`;
+const GoPageBtn = styled.button`
+  cursor: pointer;
+  padding: 10px 15px;
+  margin: 0 10px;
+  border: 1px solid #003371;
+  background: #003371;
+  color: #fff;
+  &:disabled {
+    cursor: default;
+    background: #ccc;
+    color: #fff;
+    border: 1px solid #ccc;
+  }
+  &:hover {
+    background: ${(props) => (props.disabled ? "#ccc" : "#fff")};
+    color: ${(props) => (props.disabled ? "#fff" : "#003371")};
+  }
 `;
