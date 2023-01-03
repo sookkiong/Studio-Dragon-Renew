@@ -41,13 +41,21 @@ const Articles = () => {
       return false;
     }
   };
+  const borderStyle = (value) => {
+    if (value.id === ArticleList.length) {
+      return "last";
+    } else if (value.id % 3 == 1) {
+      return "one";
+    } else if (value.id % 3 == 2) {
+      return "two";
+    } else {
+      return "three";
+    }
+  };
 
   useEffect(() => {
     navigate(`/article?p=${page}`);
   }, [page]);
-
-  console.log(search);
-  console.log(result);
 
   return (
     <div onClick={() => itemOff()}>
@@ -129,29 +137,45 @@ const Articles = () => {
         <ContentsBox>
           {searchOn ? undefined : (
             <div>
-              {ArticleList.slice(0 + (page - 1) * 6, 6 + (page - 1) * 6).map(
-                (value) => {
-                  return <div>{value.title}</div>;
-                }
-              )}
-              <button
-                disabled={prevOff()}
-                onClick={() => {
-                  setPage(page - 1);
-                  navigate(`/article?p=${page}`);
-                }}
-              >
-                이전 페이지
-              </button>
-              <button
-                disabled={nextOff()}
-                onClick={() => {
-                  setPage(page + 1);
-                  navigate(`/article?p=${page}`);
-                }}
-              >
-                다음 페이지
-              </button>
+              <ArticleUL>
+                {ArticleList.slice(0 + (page - 1) * 6, 6 + (page - 1) * 6).map(
+                  (value) => {
+                    return (
+                      <>
+                        <List id={borderStyle(value)} key={value.id}>
+                          <ListInner id="blackBorder">
+                            <PhotoBox bg={value.id}></PhotoBox>
+                            <TitleBox>{value.title}</TitleBox>
+                            <SummaryBox>{value.summary}</SummaryBox>
+                            <DateBox>{value.date}</DateBox>
+                          </ListInner>
+                        </List>
+                      </>
+                    );
+                  }
+                )}
+              </ArticleUL>
+
+              <div>
+                <button
+                  disabled={prevOff()}
+                  onClick={() => {
+                    setPage(page - 1);
+                    navigate(`/article?p=${page}`);
+                  }}
+                >
+                  이전 페이지
+                </button>
+                <button
+                  disabled={nextOff()}
+                  onClick={() => {
+                    setPage(page + 1);
+                    navigate(`/article?p=${page}`);
+                  }}
+                >
+                  다음 페이지
+                </button>
+              </div>
             </div>
           )}
 
@@ -162,7 +186,7 @@ const Articles = () => {
                     return <div key={value.id}>{value.title}</div>;
                   })
                 : `'${title}' 의` + " 검색값이 없습니다"}
-              <button>목록으로</button>
+              <button onClick={() => setSearchOn(false)}>목록으로</button>
             </div>
           ) : undefined}
         </ContentsBox>
@@ -274,5 +298,64 @@ const FindButton = styled.button`
 `;
 
 const ContentsBox = styled.div`
-  border: 1px solid #000;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+`;
+const ArticleUL = styled.ul`
+  display: grid;
+  grid-template-columns: 33.333% 33.333% 33.333%;
+  grid-template-rows: 520px 520px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+`;
+const List = styled.li`
+  padding: 15px;
+  box-sizing: border-box;
+  &:hover {
+    #blackBorder {
+      border: 1px solid #000;
+    }
+  }
+  &#one {
+    border-bottom: 1px solid #ccc;
+  }
+  &#two {
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+  &#three {
+    border-bottom: 1px solid #ccc;
+  }
+  &#last {
+    border-right: 1px solid #ccc;
+  }
+`;
+const ListInner = styled.div`
+  padding: 15px;
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid #fff;
+`;
+const PhotoBox = styled.div`
+  width: 100%;
+  height: 200px;
+  background: url("/img/ap${(props) => props.bg}.jpg") no-repeat center 30%;
+  background-size: cover;
+`;
+const TitleBox = styled.div`
+  font-size: 19px;
+  font-weight: 500;
+  text-align: justify;
+  padding: 20px 0 30px;
+`;
+const SummaryBox = styled.div`
+  color: #7c7c7c;
+  font-weight: 300;
+  text-align: justify;
+  padding-bottom: 30px;
+`;
+const DateBox = styled.div`
+  color: #7c7c7c;
+  font-weight: 300;
 `;
