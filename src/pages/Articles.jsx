@@ -52,6 +52,9 @@ const Articles = () => {
       return "three";
     }
   };
+  const pageTop = () => {
+    window.scrollTo(0, 0);
+  };
 
   useEffect(() => {
     navigate(`/article?p=${page}`);
@@ -156,12 +159,13 @@ const Articles = () => {
                 )}
               </ArticleUL>
 
-              <div>
+              <ButtonWrap>
                 <button
                   disabled={prevOff()}
                   onClick={() => {
                     setPage(page - 1);
                     navigate(`/article?p=${page}`);
+                    pageTop();
                   }}
                 >
                   이전 페이지
@@ -171,11 +175,12 @@ const Articles = () => {
                   onClick={() => {
                     setPage(page + 1);
                     navigate(`/article?p=${page}`);
+                    pageTop();
                   }}
                 >
                   다음 페이지
                 </button>
-              </div>
+              </ButtonWrap>
             </div>
           )}
 
@@ -297,10 +302,7 @@ const FindButton = styled.button`
   }
 `;
 
-const ContentsBox = styled.div`
-  border-top: 1px solid #000;
-  border-bottom: 1px solid #000;
-`;
+const ContentsBox = styled.div``;
 const ArticleUL = styled.ul`
   display: grid;
   grid-template-columns: 33.333% 33.333% 33.333%;
@@ -308,6 +310,8 @@ const ArticleUL = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
 `;
 const List = styled.li`
   padding: 15px;
@@ -358,4 +362,8 @@ const SummaryBox = styled.div`
 const DateBox = styled.div`
   color: #7c7c7c;
   font-weight: 300;
+`;
+const ButtonWrap = styled.div`
+  text-align: center;
+  padding: 30px 0;
 `;
