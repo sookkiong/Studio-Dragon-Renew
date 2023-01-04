@@ -1,13 +1,20 @@
 import { ArticleList } from "../components/Article";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const ArticleBox = () => {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const id = Number(searchParams.get("id"));
   const item = ArticleList.find((element) => element.id === id);
   const prevItem = ArticleList.find((element) => element.id === id - 1);
   const nextItem = ArticleList.find((element) => element.id === id + 1);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
 
   return (
     <Wrapper>
@@ -22,20 +29,41 @@ const ArticleBox = () => {
       <ArticleRef>{item.reference}</ArticleRef>
 
       <PhotoboxWrap>
-        <PhotoBox bg={item.id}></PhotoBox>
+        <PhotoBox>
+          <img src={`/img/an${item.id}.jpg`} width="100%" />
+        </PhotoBox>
         <Explain>{item.photoExp}</Explain>
       </PhotoboxWrap>
 
       <Content>{item.content}</Content>
 
       <ButtonWrap>
-        <PrevNnext disabled={!prevItem}>
-          {prevItem ? prevItem.title : "이전 기사가 없습니다."}
-        </PrevNnext>
-        <GoList></GoList>
-        <PrevNnext id="next" disabled={!nextItem}>
-          {nextItem ? nextItem.title : "마지막 기사 입니다."}
-        </PrevNnext>
+        <ButtonInner>
+          <span style={{ display: "block", fontWeight: "600" }}>PREV</span>
+          <PrevNnext
+            disabled={!prevItem}
+            onClick={() => navigate(`/article/detail?id=${prevItem.id}`)}
+          >
+            {prevItem ? prevItem.title : <div>이전 기사가 없습니다.</div>}
+          </PrevNnext>
+        </ButtonInner>
+
+        <GoList onClick={() => navigate("/article")}></GoList>
+
+        <ButtonInner id="right">
+          <span
+            style={{ display: "block", fontWeight: "600", textAlign: "right" }}
+          >
+            NEXT
+          </span>
+          <PrevNnext
+            id="next"
+            disabled={!nextItem}
+            onClick={() => navigate(`/article/detail?id=${nextItem.id}`)}
+          >
+            {nextItem ? nextItem.title : <div>마지막 기사입니다.</div>}
+          </PrevNnext>
+        </ButtonInner>
       </ButtonWrap>
     </Wrapper>
   );
@@ -73,14 +101,12 @@ const ArticleRef = styled.div`
   font-style: oblique;
 `;
 const PhotoboxWrap = styled.div`
-  margin: 60px 0;
+  margin: 60px auto;
+  width: 100%;
 `;
 const PhotoBox = styled.div`
-  width: 85%;
-  height: 450px;
+  width: 80%;
   margin: 0 auto;
-  background: url("/img/an${(props) => props.bg}.jpg") no-repeat center center;
-  background-size: cover;
 `;
 const Explain = styled.span`
   display: block;
@@ -101,19 +127,29 @@ const ButtonWrap = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-const PrevNnext = styled.button`
-  width: 30%;
-  cursor: pointer;
+const ButtonInner = styled.div`
+  width: 440px;
   text-align: left;
+  font-size: 15px;
+  &#right {
+    text-align: right;
+  }
+`;
+const PrevNnext = styled.button`
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
   border: none;
   background: none;
-  font-size: 15px;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  color: ${(props) => (props.disabled ? "#ccc" : "#7c7c7c")};
   &#next {
     text-align: right;
   }
   &:hover {
-    text-decoration: ${(props) => (props.undefined ? "underline" : "none")};
-    font-weight: ${(props) => (props.undefined ? "600" : "400")};
+    text-decoration: ${(props) => (props.disabled ? "none" : "underline")};
+    font-weight: ${(props) => (props.disabled ? "400" : "600")};
+    color: ${(props) => (props.disabled ? "default" : "#000")};
   }
 `;
 const GoList = styled.button`
