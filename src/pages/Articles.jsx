@@ -69,8 +69,8 @@ const Articles = () => {
       <ContentsWrap>
         <TopWrapper>
           <CountBox>
-            총 게시물 <span>{ArticleList.length}</span>, 페이지{" "}
-            <span>{page}</span>/2
+            총 게시물 <CountSpan>{ArticleList.length}</CountSpan>, 페이지{" "}
+            <CountSpan>{page}</CountSpan>/2
           </CountBox>
 
           <SearchBox>
@@ -139,7 +139,13 @@ const Articles = () => {
                   (value) => {
                     return (
                       <>
-                        <List id={borderStyle(value.id)} key={value.id}>
+                        <List
+                          id={borderStyle(value.id)}
+                          key={value.id}
+                          onClick={() =>
+                            navigate(`/article/detail?id=${value.id}`)
+                          }
+                        >
                           <ListInner id="blackBorder">
                             <PhotoBox bg={value.id}></PhotoBox>
                             <TitleBox>{value.title}</TitleBox>
@@ -184,7 +190,13 @@ const Articles = () => {
                 <ArticleUL>
                   {result.map((value, index) => {
                     return (
-                      <List id={borderStyle(index + 1)} key={value.id}>
+                      <List
+                        id={borderStyle(index + 1)}
+                        key={value.id}
+                        onClick={() =>
+                          navigate(`/article/detail?id=${value.id}`)
+                        }
+                      >
                         <ListInner id="blackBorder">
                           <PhotoBox bg={value.id}></PhotoBox>
                           <TitleBox>{value.title}</TitleBox>
@@ -196,9 +208,18 @@ const Articles = () => {
                   })}
                 </ArticleUL>
               ) : (
-                `'${title}' 의` + " 검색값이 없습니다"
+                <SearchNone>
+                  <SearchResult>'{title}'</SearchResult> 의 검색값이 없습니다.
+                </SearchNone>
               )}
-              <button onClick={() => setSearchOn(false)}>목록으로</button>
+              <GoListBtn
+                onClick={() => {
+                  setSearchOn(false);
+                  setSearch("");
+                }}
+              >
+                목록으로
+              </GoListBtn>
             </div>
           ) : undefined}
         </ContentsBox>
@@ -252,6 +273,11 @@ const TopWrapper = styled.div`
 `;
 const CountBox = styled.div`
   margin-top: 8px;
+  font-size: 18px;
+`;
+const CountSpan = styled.span`
+  color: #003371;
+  font-weight: 600;
 `;
 const SearchBox = styled.div`
   display: flex;
@@ -351,13 +377,15 @@ const TitleBox = styled.div`
   font-size: 19px;
   font-weight: 500;
   text-align: justify;
-  padding: 20px 0 30px;
+  padding: 20px 0 20px;
+  line-height: 28px;
 `;
 const SummaryBox = styled.div`
   color: #7c7c7c;
   font-weight: 300;
   text-align: justify;
   padding-bottom: 30px;
+  line-height: 26px;
 `;
 const DateBox = styled.div`
   color: #7c7c7c;
@@ -383,5 +411,30 @@ const GoPageBtn = styled.button`
   &:hover {
     background: ${(props) => (props.disabled ? "#ccc" : "#fff")};
     color: ${(props) => (props.disabled ? "#fff" : "#003371")};
+    font-weight: ${(props) => (props.disabled ? "400" : "600")};
+  }
+`;
+const SearchNone = styled.div`
+  text-align: center;
+  border-top: 1px solid #000;
+  border-bottom: 1px solid #000;
+  padding: 80px 0;
+`;
+const SearchResult = styled.span`
+  font-weight: 500;
+`;
+const GoListBtn = styled.button`
+  text-align: center;
+  margin: 50px auto;
+  display: block;
+  cursor: pointer;
+  padding: 10px 15px;
+  border: 1px solid #003371;
+  background: #003371;
+  color: #fff;
+  &:hover {
+    background: #fff;
+    color: #003371;
+    font-weight: 600;
   }
 `;
