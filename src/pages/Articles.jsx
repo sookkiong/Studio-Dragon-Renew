@@ -1,58 +1,55 @@
 import styled from "styled-components";
 import { ArticleList } from "../components/Article";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Articles = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [searchParams] = useSearchParams();
-  const title = searchParams.get("q");
-  const result = ArticleList.filter((element) => element.title.includes(title));
-  const [page, setPage] = useState(1);
+  const title = searchParams.get("q") || "";
+  const pageCount = Number(searchParams.get("page")) || 1;
+  const result = ArticleList.filter((element) =>
+    element.title.includes(title)
+  ).slice(0 + (pageCount - 1) * 6, 6 + (pageCount - 1) * 6);
+  const totalCount = ArticleList.filter((element) =>
+    element.title.includes(title)
+  ).length;
   const [selected, setSelected] = useState("제목+내용");
   const [cateOn, setCateOn] = useState(false);
-  const [searchOn, setSearchOn] = useState(false);
-
+  const isLast =
+    ArticleList.filter((element) => element.title.includes(title)).slice(
+      0 + pageCount * 6,
+      6 + pageCount * 6
+    ).length === 0;
   const turnArrow = () => {
     const id = cateOn === true ? "on" : undefined;
     return id;
   };
   const enterOn = (e) => {
     if (e.keyCode === 13) {
-      navigate(`/article?q=${search}`);
-      setSearchOn(true);
+      navigate(`/article?q=${search}&page=1`);
     }
   };
   const itemOff = () => {
     setCateOn(false);
   };
-  const prevOff = () => {
-    if (page === 1) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const prevOff = pageCount === 1;
   const nextOff = () => {
-    if (page === 2) {
+    if (isLast) {
       return true;
     } else {
       return false;
     }
   };
   const borderStyle = (value) => {
-    if (value % 3 == 0) {
+    if (value % 3 === 0) {
       return "three";
     }
   };
   const pageTop = () => {
     window.scrollTo(0, 0);
   };
-
-  useEffect(() => {
-    navigate(`/article?p=${page}`);
-  }, [page]);
 
   return (
     <div onClick={() => itemOff()}>
@@ -69,8 +66,8 @@ const Articles = () => {
       <ContentsWrap>
         <TopWrapper>
           <CountBox>
-            총 게시물 <CountSpan>{ArticleList.length}</CountSpan>, 페이지{" "}
-            <CountSpan>{page}</CountSpan>/2
+            총 게시물 <CountSpan>{totalCount}</CountSpan>, 페이지{" "}
+            <CountSpan>{pageCount}</CountSpan>/{(totalCount / 6).toFixed(0)}
           </CountBox>
 
           <SearchBox>
@@ -123,7 +120,6 @@ const Articles = () => {
             <FindButton
               onClick={() => {
                 navigate(`/article?q=${search}`);
-                setSearchOn(true);
               }}
             >
               검색
@@ -132,66 +128,18 @@ const Articles = () => {
         </TopWrapper>
 
         <ContentsBox>
-          {searchOn ? undefined : (
-            <div>
+          <div>
+            {!result.length ? (
+              <SearchNone>
+                <SearchResult>'{title}'</SearchResult> 의 검색값이 없습니다.
+              </SearchNone>
+            ) : (
               <ArticleUL>
-                {ArticleList.slice(0 + (page - 1) * 6, 6 + (page - 1) * 6).map(
-                  (value) => {
-                    return (
-                      <>
-                        <List
-                          id={borderStyle(value.id)}
-                          key={value.id}
-                          onClick={() =>
-                            navigate(`/article/detail?id=${value.id}`)
-                          }
-                        >
-                          <ListInner id="blackBorder">
-                            <PhotoBox bg={value.id}></PhotoBox>
-                            <TitleBox>{value.title}</TitleBox>
-                            <SummaryBox>{value.summary}</SummaryBox>
-                            <DateBox>{value.date}</DateBox>
-                          </ListInner>
-                        </List>
-                      </>
-                    );
-                  }
-                )}
-              </ArticleUL>
-
-              <ButtonWrap>
-                <GoPageBtn
-                  disabled={prevOff()}
-                  onClick={() => {
-                    setPage(page - 1);
-                    navigate(`/article?p=${page}`);
-                    pageTop();
-                  }}
-                >
-                  이전 페이지
-                </GoPageBtn>
-                <GoPageBtn
-                  disabled={nextOff()}
-                  onClick={() => {
-                    setPage(page + 1);
-                    navigate(`/article?p=${page}`);
-                    pageTop();
-                  }}
-                >
-                  다음 페이지
-                </GoPageBtn>
-              </ButtonWrap>
-            </div>
-          )}
-
-          {searchOn ? (
-            <div>
-              {result.length > 0 ? (
-                <ArticleUL>
-                  {result.map((value, index) => {
-                    return (
+                {result.map((value) => {
+                  return (
+                    <>
                       <List
-                        id={borderStyle(index + 1)}
+                        id={borderStyle(value.id)}
                         key={value.id}
                         onClick={() =>
                           navigate(`/article/detail?id=${value.id}`)
@@ -204,24 +152,33 @@ const Articles = () => {
                           <DateBox>{value.date}</DateBox>
                         </ListInner>
                       </List>
-                    );
-                  })}
-                </ArticleUL>
-              ) : (
-                <SearchNone>
-                  <SearchResult>'{title}'</SearchResult> 의 검색값이 없습니다.
-                </SearchNone>
-              )}
-              <GoListBtn
+                    </>
+                  );
+                })}
+              </ArticleUL>
+            )}
+
+            <ButtonWrap>
+              <GoPageBtn
+                disabled={prevOff}
                 onClick={() => {
-                  setSearchOn(false);
-                  setSearch("");
+                  navigate(`/article?q=${title}&page=${pageCount - 1}`);
+                  pageTop();
                 }}
               >
-                목록으로
-              </GoListBtn>
-            </div>
-          ) : undefined}
+                이전 페이지
+              </GoPageBtn>
+              <GoPageBtn
+                disabled={nextOff()}
+                onClick={() => {
+                  navigate(`/article?q=${title}&page=${pageCount + 1}`);
+                  pageTop();
+                }}
+              >
+                다음 페이지
+              </GoPageBtn>
+            </ButtonWrap>
+          </div>
         </ContentsBox>
       </ContentsWrap>
     </div>
@@ -422,19 +379,4 @@ const SearchNone = styled.div`
 `;
 const SearchResult = styled.span`
   font-weight: 500;
-`;
-const GoListBtn = styled.button`
-  text-align: center;
-  margin: 50px auto;
-  display: block;
-  cursor: pointer;
-  padding: 10px 15px;
-  border: 1px solid #003371;
-  background: #003371;
-  color: #fff;
-  &:hover {
-    background: #fff;
-    color: #003371;
-    font-weight: 600;
-  }
 `;
