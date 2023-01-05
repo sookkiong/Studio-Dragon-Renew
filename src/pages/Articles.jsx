@@ -1,39 +1,33 @@
 import styled from "styled-components";
 import { ArticleList } from "../components/Article";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Articles = () => {
   const navigate = useNavigate();
-  const [search, setSearch] = useState("");
   const [searchParams] = useSearchParams();
-  const title = searchParams.get("q") || "";
+  const searchValue = searchParams.get("q") || "";
+  const [search, setSearch] = useState("");
   const pageCount = Number(searchParams.get("page")) || 1;
   const result = ArticleList.filter((element) =>
-    element.title.includes(title)
+    element["title"].includes(searchValue)
   ).slice(0 + (pageCount - 1) * 6, 6 + (pageCount - 1) * 6);
   const totalCount = ArticleList.filter((element) =>
-    element.title.includes(title)
+    element["title"].includes(searchValue)
   ).length;
-  const [selected, setSelected] = useState("제목+내용");
-  const [cateOn, setCateOn] = useState(false);
+
   const isLast =
-    ArticleList.filter((element) => element.title.includes(title)).slice(
+    ArticleList.filter((element) => element.title.includes(searchValue)).slice(
       0 + pageCount * 6,
       6 + pageCount * 6
     ).length === 0;
-  const turnArrow = () => {
-    const id = cateOn === true ? "on" : undefined;
-    return id;
-  };
+
   const enterOn = (e) => {
     if (e.keyCode === 13) {
       navigate(`/article?q=${search}&page=1`);
     }
   };
-  const itemOff = () => {
-    setCateOn(false);
-  };
+
   const prevOff = pageCount === 1;
   const nextOff = () => {
     if (isLast) {
@@ -50,9 +44,11 @@ const Articles = () => {
   const pageTop = () => {
     window.scrollTo(0, 0);
   };
-
+  useEffect(() => {
+    setSearch(searchValue);
+  }, [searchValue]);
   return (
-    <div onClick={() => itemOff()}>
+    <>
       <PageTop>
         <BlackBG />
         <TextBox>
@@ -67,54 +63,19 @@ const Articles = () => {
         <TopWrapper>
           <CountBox>
             총 게시물 <CountSpan>{totalCount}</CountSpan>, 페이지{" "}
-            <CountSpan>{pageCount}</CountSpan>/{(totalCount / 6).toFixed(0)}
+            <CountSpan>{pageCount}</CountSpan>/
+            {totalCount % 6 !== 0
+              ? Math.floor(totalCount / 6) + 1
+              : totalCount / 6}
           </CountBox>
 
           <SearchBox>
-            <Category>
-              <SelectedItem
-                id={turnArrow()}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setCateOn(!cateOn);
-                }}
-              >
-                {selected}
-              </SelectedItem>
-              {cateOn ? (
-                <Items>
-                  <Item
-                    onClick={() => {
-                      setSelected("제목+내용");
-                      setCateOn(false);
-                    }}
-                  >
-                    제목+내용
-                  </Item>
-                  <Item
-                    onClick={() => {
-                      setSelected("제목");
-                      setCateOn(false);
-                    }}
-                  >
-                    제목
-                  </Item>
-                  <Item
-                    onClick={() => {
-                      setSelected("내용");
-                      setCateOn(false);
-                    }}
-                  >
-                    내용
-                  </Item>
-                </Items>
-              ) : undefined}
-            </Category>
-
             <Input
               type="text"
+              value={search}
               onChange={(e) => setSearch(e.target.value)}
               onKeyDown={(e) => enterOn(e)}
+              placeholder="기사를 검색해보세요!"
             />
 
             <FindButton
@@ -131,7 +92,8 @@ const Articles = () => {
           <div>
             {!result.length ? (
               <SearchNone>
-                <SearchResult>'{title}'</SearchResult> 의 검색값이 없습니다.
+                <SearchResult>'{searchValue}'</SearchResult> 의 검색값이
+                없습니다.
               </SearchNone>
             ) : (
               <ArticleUL>
@@ -162,7 +124,7 @@ const Articles = () => {
               <GoPageBtn
                 disabled={prevOff}
                 onClick={() => {
-                  navigate(`/article?q=${title}&page=${pageCount - 1}`);
+                  navigate(`/article?q=${searchValue}&page=${pageCount - 1}`);
                   pageTop();
                 }}
               >
@@ -171,7 +133,7 @@ const Articles = () => {
               <GoPageBtn
                 disabled={nextOff()}
                 onClick={() => {
-                  navigate(`/article?q=${title}&page=${pageCount + 1}`);
+                  navigate(`/article?q=${searchValue}&page=${pageCount + 1}`);
                   pageTop();
                 }}
               >
@@ -181,7 +143,7 @@ const Articles = () => {
           </div>
         </ContentsBox>
       </ContentsWrap>
-    </div>
+    </>
   );
 };
 
@@ -240,38 +202,10 @@ const SearchBox = styled.div`
   display: flex;
   position: relative;
   width: 475px;
-  height: 100px;
-`;
-const Category = styled.div`
-  position: absolute;
-  z-index: 10;
-  width: 160px;
-  right: 290px;
-  left: 0;
-`;
-const SelectedItem = styled.div`
-  border: 1px solid #ccc;
-  padding: 8px 15px;
-  cursor: pointer;
-  background: url("/img/cate_g.png") no-repeat 90% center;
-  &#on {
-    background: url("/img/cate_g_on.png") no-repeat 90% center;
-  }
-`;
-const Items = styled.ul`
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-top: none;
-`;
-const Item = styled.li`
-  padding: 8px 15px;
-  cursor: pointer;
+  height: 60px;
 `;
 const Input = styled.input`
-  width: 200px;
+  width: 250px;
   position: absolute;
   right: 75px;
   padding: 12px 10px;
@@ -296,7 +230,6 @@ const ContentsBox = styled.div``;
 const ArticleUL = styled.ul`
   display: grid;
   grid-template-columns: 33.333% 33.333% 33.333%;
-
   list-style: none;
   margin: 0;
   padding: 0;
