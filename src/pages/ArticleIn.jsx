@@ -30,7 +30,7 @@ const ArticleBox = () => {
 
       <PhotoboxWrap>
         <PhotoBox>
-          <img src={`/img/an${item.id}.jpg`} width="100%" />
+          <img src={`/img/an${item.id}.jpg`} alt="기사 이미지" width="100%" />
         </PhotoBox>
         <Explain>{item.photoExp}</Explain>
       </PhotoboxWrap>

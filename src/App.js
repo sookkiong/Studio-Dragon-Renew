@@ -10,6 +10,7 @@ import ContentBox from "./pages/ContentsIn";
 import Recruit from "./pages/Recruit";
 import Articles from "./pages/Articles";
 import ArticleBox from "./pages/ArticleIn";
+import MainPage from "./pages/Main";
 
 function App() {
   return (
@@ -17,7 +18,6 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Routes>
-          <Route path="/" />
           <Route path="/" element={<BlackLayout />}>
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
@@ -25,6 +25,7 @@ function App() {
             <Route path="article/detail" element={<ArticleBox />} />
           </Route>
           <Route path="/" element={<WhiteLayout />}>
+            <Route index element={<MainPage />} />
             <Route path="contents" element={<Contents />} />
             <Route path="recruit" element={<Recruit />} />
             <Route path="article" element={<Articles />} />
