@@ -1,8 +1,13 @@
 import { SectionsContainer, Section } from "react-fullpage";
-import MainSlider from "../components/MainSlider";
-import styled, { keyframes, Keyframes } from "styled-components";
+import MainSlider from "../components/slider/MainSlider";
+import styled, { keyframes } from "styled-components";
+import "../fullpage/SectionsContainer.js";
+import OnairSlider from "../components/slider/onairSlider";
 
 const MainPage = () => {
+  const location = window.scrollY;
+  console.log(location);
+
   let options = {
     anchors: ["home", "onAir", "works", "issue", "news"],
     delay: 500,
@@ -23,13 +28,39 @@ const MainPage = () => {
           <MainSlider />
 
           <ScrollMouse>
-            <img src="/img/mouse.png" width="100%" />
+            <img src="/img/mouse.png" width="100%" alt="mouse" />
           </ScrollMouse>
         </Section1Box>
       </Section>
 
       <Section>
-        <div>섹션2</div>
+        <Section2Box>
+          <div style={{ textAlign: "center" }}>
+            <span
+              style={{
+                fontSize: "60px",
+                fontWeight: "600",
+                fontFamily: "YDestreet",
+              }}
+            >
+              ONAIR
+            </span>
+            <span
+              style={{
+                fontSize: "20px",
+                display: "block",
+                backgroundColor: "#000",
+                color: "#fff",
+                padding: "0 10px",
+                marginTop: "10px",
+              }}
+            >
+              스튜디오 드래곤이 제작한 드라마가 현재 방영 중입니다.
+            </span>
+          </div>
+
+          <OnairSlider />
+        </Section2Box>
       </Section>
 
       <Section>
@@ -89,4 +120,12 @@ const ScrollMouse = styled.div`
   left: calc(50% - 20px);
   animation: ${animation} 0.5s linear infinite;
   animation-direction: alternate;
+`;
+const Section2Box = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;

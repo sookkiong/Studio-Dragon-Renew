@@ -1,7 +1,7 @@
 import Slider from "react-slick";
-import { MainSliderItem } from "./Main";
-import "../slick/slick.css";
-import "../slick/slick-theme.css";
+import { MainSliderItem } from "../Main";
+import "../../slick/slick.css";
+import "../../slick/main-slick-theme.css";
 
 const MainSlider = () => {
   const settings = {
