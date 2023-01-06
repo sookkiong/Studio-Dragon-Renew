@@ -28,7 +28,7 @@ const MainSlider = () => {
       <Slider {...settings}>
         {MainSliderItem.map((slide) => {
           return (
-            <div>
+            <div key={slide.id}>
               <img src={slide.img} alt="슬라이드 이미지" width="100%" />
             </div>
           );

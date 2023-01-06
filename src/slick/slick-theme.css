@@ -8,12 +8,12 @@
     line-height: 0;
 
     position: absolute;
-    top: 50%;
+    top: 80%;
 
     display: block;
 
-    width: 20px;
-    height: 20px;
+    width: 35px;
+    height: 35px;
     padding: 0;
     -webkit-transform: translate(0, -50%);
     -ms-transform: translate(0, -50%);
@@ -29,13 +29,13 @@
 }
 .slick-prev
 {
-    right: 300px;
+    right: 16%;
     background: url("./prev.png") no-repeat center center;
     background-size: contain;
 }
 .slick-next
 {
-    right: 200px;
+    right: 6%;
     background: url("./next.png") no-repeat center center;
     background-size: contain;
 }
