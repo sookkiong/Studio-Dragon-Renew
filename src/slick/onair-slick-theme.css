@@ -7,7 +7,7 @@
     line-height: 0;
 
     position: absolute;
-    bottom: 0%;
+    top: calc(50% - 17.5px);
 
     display: block;
 
@@ -28,14 +28,14 @@
 }
 .slick-prev
 {
-    left: calc(50% - 80px);
-    background: url("./on_prev.png") no-repeat center center;
+    left: 0;
+    background: url("./on_prev_h.png") no-repeat center center;
     background-size: contain;
 }
 .slick-next
 {
-    left: calc(50% + 80px);
-    background: url("./on_next.png") no-repeat center center;
+    right: 0;
+    background: url("./on_next_h.png") no-repeat center center;
     background-size: contain;
 }
 /* 

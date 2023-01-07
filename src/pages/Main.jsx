@@ -3,10 +3,14 @@ import MainSlider from "../components/slider/MainSlider";
 import styled, { keyframes } from "styled-components";
 import "../fullpage/SectionsContainer.js";
 import OnairSlider from "../components/slider/onairSlider";
+import { popularWorks } from "../components/Main";
+import { useState } from "react";
 
 const MainPage = () => {
-  const location = window.scrollY;
-  console.log(location);
+  const [workOn, setWorkOn] = useState(false);
+  const handleOn = () => {
+    setWorkOn(false);
+  };
 
   let options = {
     anchors: ["home", "onAir", "works", "issue", "news"],
@@ -15,66 +19,86 @@ const MainPage = () => {
   };
 
   return (
-    <SectionsContainer {...options}>
-      <Section>
-        <Section1Box>
-          <MainText>
-            <MainTextTitle>ASIA NO.1 STUDIO</MainTextTitle>
-            아시아의 콘텐츠와 라이프스타일을
-            <br />
-            선도합니다.
-          </MainText>
+    <div onMouseOver={handleOn}>
+      <SectionsContainer {...options}>
+        <Section>
+          <Section1Box>
+            <MainText>
+              <MainTextTitle>ASIA NO.1 STUDIO</MainTextTitle>
+              아시아의 콘텐츠와 라이프스타일을
+              <br />
+              선도합니다.
+            </MainText>
 
-          <MainSlider />
+            <MainSlider />
 
-          <ScrollMouse>
-            <img src="/img/mouse.png" width="100%" alt="mouse" />
-          </ScrollMouse>
-        </Section1Box>
-      </Section>
+            <ScrollMouse>
+              <img src="/img/mouse.png" width="100%" alt="mouse" />
+            </ScrollMouse>
+          </Section1Box>
+        </Section>
 
-      <Section>
-        <Section2Box>
-          <div style={{ textAlign: "center" }}>
-            <span
-              style={{
-                fontSize: "60px",
-                fontWeight: "600",
-                fontFamily: "YDestreet",
-              }}
-            >
-              ONAIR
-            </span>
-            <span
-              style={{
-                fontSize: "20px",
-                display: "block",
-                backgroundColor: "#000",
-                color: "#fff",
-                padding: "0 10px",
-                marginTop: "10px",
-              }}
-            >
-              스튜디오 드래곤이 제작한 드라마가 현재 방영 중입니다.
-            </span>
-          </div>
+        <Section>
+          <Section2Box>
+            <div style={{ textAlign: "center" }}>
+              <SectionTitle>ONAIR</SectionTitle>
+              <SectionExplain>
+                스튜디오 드래곤이 제작한 드라마가 현재 방영 중입니다.
+              </SectionExplain>
+            </div>
 
-          <OnairSlider />
-        </Section2Box>
-      </Section>
+            <OnairSlider />
+          </Section2Box>
+        </Section>
 
-      <Section>
-        <div>섹션3</div>
-      </Section>
+        <Section>
+          <Section3Box>
+            <TitleNMore>
+              <div style={{ textAlign: "left" }}>
+                <SectionTitle>WORKS</SectionTitle>
+                <SectionExplain>
+                  많은 시청자들에게 사랑받은 역대 최고 인기 작품들입니다.
+                </SectionExplain>
+              </div>
 
-      <Section>
-        <div>섹션4</div>
-      </Section>
+              <ViewMore>VIEW MORE →</ViewMore>
+            </TitleNMore>
 
-      <Section>
-        <div>섹션5</div>
-      </Section>
-    </SectionsContainer>
+            <div style={{ width: "85%", height: "60%" }}>
+              <PopularUL>
+                {popularWorks.map((work) => {
+                  return (
+                    <PopularList
+                      key={work.id}
+                      bg={work.id}
+                      onMouseOver={(e) => {
+                        e.stopPropagation();
+                        setWorkOn(work.id);
+                      }}
+                    >
+                      {workOn === work.id ? (
+                        <PLInner bg={work.bg}>
+                          <PLtitle>{work.title}</PLtitle>
+                          <PLcontent>{work.result}</PLcontent>
+                        </PLInner>
+                      ) : undefined}
+                    </PopularList>
+                  );
+                })}
+              </PopularUL>
+            </div>
+          </Section3Box>
+        </Section>
+
+        <Section>
+          <div>섹션4</div>
+        </Section>
+
+        <Section>
+          <div>섹션5</div>
+        </Section>
+      </SectionsContainer>
+    </div>
   );
 };
 
@@ -128,4 +152,84 @@ const Section2Box = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+`;
+const SectionTitle = styled.span`
+  font-size: 60px;
+  font-weight: 600;
+  font-family: YDestreet;
+  display: block;
+`;
+const SectionExplain = styled.span`
+  font-size: 20px;
+  background-color: #000;
+  color: #fff;
+  padding: 0 10px;
+  margin-top: 10px;
+`;
+const Section3Box = styled.div`
+  width: 74%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  margin: 0 auto;
+`;
+const TitleNMore = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  margin-bottom: 60px;
+`;
+const ViewMore = styled.div`
+  margin-bottom: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  &:hover {
+    color: #7c7c7c;
+  }
+`;
+const PopularUL = styled.ul`
+  width: 100%;
+  height: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 22.75% 22.75% 22.75% 22.75%;
+  grid-template-rows: 46% 46%;
+  row-gap: 8%;
+  justify-content: space-between;
+`;
+const PopularList = styled.li`
+  background: url("/img/work${(props) => props.bg}.png") no-repeat center center;
+  background-size: cover;
+  cursor: pointer;
+`;
+const PLInner = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: ${(props) => props.bg};
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5%;
+  box-sizing: border-box;
+  text-align: center;
+  color: #fff;
+  font-weight: 300;
+  font-size: 18px;
+`;
+const PLtitle = styled.div`
+  font-size: 26px;
+  font-weight: 500;
+  padding-bottom: 8px;
+`;
+const PLcontent = styled.div`
+  border-top: 1px solid #fff;
+  padding-top: 8px;
 `;
