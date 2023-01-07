@@ -1,20 +1,28 @@
 import { SectionsContainer, Section } from "react-fullpage";
 import MainSlider from "../components/slider/MainSlider";
+import { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import "../fullpage/SectionsContainer.js";
 import OnairSlider from "../components/slider/onairSlider";
 import { popularWorks } from "../components/Main";
-import { useState } from "react";
+import { Works } from "../components/Contents";
+import { useNavigate } from "react-router";
 
 const MainPage = () => {
+  const navigate = useNavigate();
   const [workOn, setWorkOn] = useState(false);
+
   const handleOn = () => {
     setWorkOn(false);
   };
+  const goWork = (value) => {
+    const finding = Works.find((element) => element.title === value).id;
+    return finding;
+  };
 
   let options = {
-    anchors: ["home", "onAir", "works", "issue", "news"],
-    delay: 500,
+    anchors: ["home", "onAir", "works", "slogan", "recruit", "news"],
+    delay: 800,
     navigation: true,
   };
 
@@ -75,6 +83,9 @@ const MainPage = () => {
                         e.stopPropagation();
                         setWorkOn(work.id);
                       }}
+                      onClick={() =>
+                        navigate(`contents/detail?id=${goWork(work.title)}`)
+                      }
                     >
                       {workOn === work.id ? (
                         <PLInner bg={work.bg}>
@@ -91,11 +102,15 @@ const MainPage = () => {
         </Section>
 
         <Section>
-          <div>섹션4</div>
+          <Section4Box></Section4Box>
         </Section>
 
         <Section>
-          <div>섹션5</div>
+          <Section4Box></Section4Box>
+        </Section>
+
+        <Section>
+          <div>섹션6</div>
         </Section>
       </SectionsContainer>
     </div>
@@ -232,4 +247,14 @@ const PLtitle = styled.div`
 const PLcontent = styled.div`
   border-top: 1px solid #fff;
   padding-top: 8px;
+`;
+const Section4Box = styled.div`
+  width: 74%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  margin: 0 auto;
 `;

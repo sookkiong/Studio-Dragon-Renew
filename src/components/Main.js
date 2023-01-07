@@ -24,7 +24,7 @@ export const MainSliderItem = [
 export const popularWorks = [
   {
     id: 1,
-    title: "호텔델루나",
+    title: "호텔 델루나",
     result: "2020 방송 통신위원회 방송대상 우수상 수상",
     bg: "rgba(81,24,105,0.5)",
   },
