@@ -1,6 +1,6 @@
 import Slider from "react-slick";
 import { MainSliderItem } from "../Main";
-import "../../slick/slick.css";
+import "../../slick/main-slick.css";
 import "../../slick/main-slick-theme.css";
 
 const MainSlider = () => {
@@ -21,7 +21,7 @@ const MainSlider = () => {
         overflow: "hidden",
         width: "60%",
         height: "65%",
-        zIndex: "50",
+        zIndex: "5",
         marginRight: "15%",
       }}
     >

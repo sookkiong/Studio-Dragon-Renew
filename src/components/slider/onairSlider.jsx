@@ -1,40 +1,36 @@
 import Slider from "react-slick";
-import "../../slick/onair-slick-theme.css";
 import { Works } from "../Contents";
 import styled from "styled-components";
+import "../../slick/onair-slick.css";
+import "../../slick/onair-slick-theme.css";
 
 const OnairSlider = () => {
   const items = Works.filter((element) => element.onAir === "방영 중");
   console.log(items);
   const settings = {
     dots: false,
-    infinite: true,
+    /* infinite: true, */
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 2,
     slidesToScroll: 1,
     arrows: true,
-    autoplay: true,
-    autoplaySpeed: 1800,
+    /* autoplay: true,
+    autoplaySpeed: 1800, */
     pauseOnHover: false,
+    variableWidth: true,
   };
   return (
     <div
       style={{
         width: "65%",
-        height: "50%",
-        marginTop: "50px",
+        height: "70%",
+        paddingTop: "50px",
+        boxSizing: "border-box",
       }}
     >
       <Slider {...settings}>
         {items.map((work) => {
-          return (
-            <Item key={work.id} bg={work.id}>
-              <div>{work.title}</div>
-              <div>{work.info}</div>
-              <div>{work.actors}</div>
-              <div>{work.producer}</div>
-            </Item>
-          );
+          return <Item key={work.id} bg={work.id} style={{ width: "350px" }} />;
         })}
       </Slider>
     </div>
@@ -44,8 +40,8 @@ const OnairSlider = () => {
 export default OnairSlider;
 
 const Item = styled.div`
-  width: 300px;
-  height: 500px;
+  height: 420px;
   background: url("/img/wc${(props) => props.bg}.jpg") no-repeat center center;
-  background-size: cover;
+  background-size: contain;
+  cursor: pointer;
 `;
