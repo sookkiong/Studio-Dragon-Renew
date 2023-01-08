@@ -406,7 +406,7 @@ const GoRecruit = styled.span`
     background-color: #fff;
     transform-origin: 0% 50%;
     transform: scaleX(0);
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.3s ease-in-out;
   }
   &:hover {
     ::after {
