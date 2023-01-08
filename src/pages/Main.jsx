@@ -14,6 +14,7 @@ const MainPage = () => {
   const location = useLocation();
   const [workOn, setWorkOn] = useState(false);
   const [textOn, setTextOn] = useState(false);
+  const [underline, setUnderline] = useState(false);
 
   const handleOn = () => {
     setWorkOn(false);
@@ -22,13 +23,11 @@ const MainPage = () => {
     const finding = Works.find((element) => element.title === value).id;
     return finding;
   };
-
   let options = {
     anchors: ["home", "onAir", "works", "slogan", "recruit", "news"],
     delay: 800,
     navigation: true,
   };
-
   const pageHash = () => {
     if (location.hash === "#slogan") {
       setTextOn(true);
@@ -127,7 +126,29 @@ const MainPage = () => {
           </Section4Box>
         </Section>
 
-        <Section>{/* <Section5Box></Section5Box> */}</Section>
+        <Section>
+          <Section5Box>
+            <Section5Content>
+              <RecruitEng>
+                As a forerunner of the industry, we are dedicated to building a
+                healthy bussiness ecosystem.
+              </RecruitEng>
+              <RecruitKor>
+                업계 리더로서 콘텐츠 산업의 건전한 생태계 조성에 힘쓰고, 관련한
+                일자리 창출을 실천합니다.
+              </RecruitKor>
+              <GoRecruit
+                id={underline}
+                onMouseOver={() => {
+                  setUnderline("ani");
+                }}
+                onMouseLeave={() => setUnderline(false)}
+              >
+                채용정보 보러가기 →
+              </GoRecruit>
+            </Section5Content>
+          </Section5Box>
+        </Section>
 
         <Section>
           <div>섹션6</div>
@@ -271,9 +292,6 @@ const PLcontent = styled.div`
 const Section4Box = styled.div`
   height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
@@ -289,11 +307,11 @@ const Ani_righttext = keyframes`
 const SloganTxtRight = styled.div`
   position: absolute;
   font-size: 7vw;
-  font-weight: 600;
+  font-weight: 900;
   right: -100%;
   top: 30%;
   &#ani {
-    animation: ${Ani_righttext} 0.5s ease;
+    animation: ${Ani_righttext} 1s ease;
     animation-fill-mode: forwards;
   }
 `;
@@ -308,7 +326,7 @@ const Ani_lefttext = keyframes`
 const SloganTxtLeft = styled.div`
   position: absolute;
   font-size: 7vw;
-  font-weight: 600;
+  font-weight: 900;
   left: -100%;
   bottom: 30%;
   &#ani {
@@ -317,3 +335,83 @@ const SloganTxtLeft = styled.div`
     animation-delay: 0.3s;
   }
 `;
+const Section5Box = styled.div`
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+`;
+const Section5Content = styled.div`
+  width: 70%;
+  height: 65%;
+  background: url("/img/issuebg.png") no-repeat;
+  background-size: cover;
+  box-sizing: border-box;
+  color: #fff;
+  padding: 0 7%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+const RecruitEng = styled.div`
+  font-size: 4vw;
+  font-weight: 900;
+  line-height: 1.1;
+`;
+const RecruitKor = styled.div`
+  margin: 20px 0;
+  font-size: 20px;
+`;
+const GoRecruit = styled.span`
+  cursor: pointer;
+  display: block;
+  width: fit-content;
+  margin-left: 81%;
+  position: relative;
+  &.start {
+    width: 0;
+  }
+  &.end {
+    width: 100%;
+    transition: width 0.5s;
+  }
+  &#ani {
+    ::after {
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      content: "";
+      width: 100%;
+      height: 1px;
+      background-color: #fff;
+    }
+  }
+`;
+/* const Ani_underline = keyframes`
+  0%{
+    width: 0;
+  }
+  100%{
+    width: 100%;
+  }
+`;
+const GoRecruit = styled.span`
+  cursor: pointer;
+  display: block;
+  width: fit-content;
+  margin-left: 81%;
+  position: relative;
+  &#ani {
+    ::after {
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      content: "";
+      width: 100%;
+      height: 1px;
+      background-color: #fff;
+      animation: ${Ani_underline} 0.3s linear;
+      animation-direction: alternate;
+    }
+  }
+`; */
