@@ -1,13 +1,14 @@
 import { SectionsContainer, Section } from "react-fullpage";
 import MainSlider from "../components/slider/MainSlider";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { useLocation } from "react-router";
 import styled, { keyframes } from "styled-components";
 import "../fullpage/SectionsContainer.js";
 import OnairSlider from "../components/slider/onairSlider";
 import { popularWorks } from "../components/Main";
 import { Works } from "../components/Contents";
-import { useNavigate } from "react-router";
-import { useLocation } from "react-router";
+import { ArticleList } from "../components/Article";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ const MainPage = () => {
   const [workOn, setWorkOn] = useState(false);
   const [textOn, setTextOn] = useState(false);
   const [underline, setUnderline] = useState(false);
+  const firstArticle = ArticleList.find((element) => element.id === 1);
+  const fiveArticle = ArticleList.slice(0, 5);
 
   const handleOn = () => {
     setWorkOn(false);
@@ -137,21 +140,46 @@ const MainPage = () => {
                 업계 리더로서 콘텐츠 산업의 건전한 생태계 조성에 힘쓰고, 관련한
                 일자리 창출을 실천합니다.
               </RecruitKor>
-              <GoRecruit
-                id={underline}
-                onMouseOver={() => {
-                  setUnderline("ani");
-                }}
-                onMouseLeave={() => setUnderline(false)}
-              >
-                채용정보 보러가기 →
-              </GoRecruit>
+              <GoRecruit>채용정보 보러가기 →</GoRecruit>
             </Section5Content>
           </Section5Box>
         </Section>
 
         <Section>
-          <div>섹션6</div>
+          <Section6Box>
+            <div style={{ textAlign: "center" }}>
+              <SectionTitle>NEWS ROOM</SectionTitle>
+              <SectionExplain>
+                스튜디오 드래곤의 보도자료를 한눈에 보기
+              </SectionExplain>
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "60%",
+                height: "50%",
+                marginTop: "60px",
+              }}
+            >
+              <FirstItem></FirstItem>
+
+              <div style={{ width: "60%" }}>
+                <table>
+                  {fiveArticle.map((value) => {
+                    return (
+                      <tr>
+                        <th>{value.title}</th>
+                        <td>{value.date}</td>
+                      </tr>
+                    );
+                  })}
+                </table>
+                <div>기사 더 보기 →</div>
+              </div>
+            </div>
+          </Section6Box>
         </Section>
       </SectionsContainer>
     </div>
@@ -221,7 +249,7 @@ const SectionExplain = styled.span`
   background-color: #000;
   color: #fff;
   padding: 0 10px;
-  margin-top: 10px;
+  margin-top: 15px;
 `;
 const Section3Box = styled.div`
   width: 74%;
@@ -368,50 +396,34 @@ const GoRecruit = styled.span`
   width: fit-content;
   margin-left: 81%;
   position: relative;
-  &.start {
-    width: 0;
-  }
-  &.end {
+  ::after {
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    content: "";
     width: 100%;
-    transition: width 0.5s;
+    height: 1px;
+    background-color: #fff;
+    transform-origin: 0% 50%;
+    transform: scaleX(0);
+    transition: transform 0.5s ease-in-out;
   }
-  &#ani {
+  &:hover {
     ::after {
-      position: absolute;
-      left: 0;
-      bottom: -2px;
-      content: "";
-      width: 100%;
-      height: 1px;
-      background-color: #fff;
+      transform: scaleX(1);
     }
   }
 `;
-/* const Ani_underline = keyframes`
-  0%{
-    width: 0;
-  }
-  100%{
-    width: 100%;
-  }
+const Section6Box = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
-const GoRecruit = styled.span`
-  cursor: pointer;
-  display: block;
-  width: fit-content;
-  margin-left: 81%;
-  position: relative;
-  &#ani {
-    ::after {
-      position: absolute;
-      left: 0;
-      bottom: -2px;
-      content: "";
-      width: 100%;
-      height: 1px;
-      background-color: #fff;
-      animation: ${Ani_underline} 0.3s linear;
-      animation-direction: alternate;
-    }
-  }
-`; */
+const FirstItem = styled.div`
+  width: 35%;
+  border: 1px solid red;
+  background: url("/img/");
+`;
