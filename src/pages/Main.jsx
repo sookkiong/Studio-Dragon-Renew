@@ -1,16 +1,19 @@
 import { SectionsContainer, Section } from "react-fullpage";
 import MainSlider from "../components/slider/MainSlider";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import "../fullpage/SectionsContainer.js";
 import OnairSlider from "../components/slider/onairSlider";
 import { popularWorks } from "../components/Main";
 import { Works } from "../components/Contents";
 import { useNavigate } from "react-router";
+import { useLocation } from "react-router";
 
 const MainPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [workOn, setWorkOn] = useState(false);
+  const [textOn, setTextOn] = useState(false);
 
   const handleOn = () => {
     setWorkOn(false);
@@ -25,6 +28,18 @@ const MainPage = () => {
     delay: 800,
     navigation: true,
   };
+
+  const pageHash = () => {
+    if (location.hash === "#slogan") {
+      setTextOn(true);
+    } else {
+      setTextOn(false);
+    }
+  };
+
+  useEffect(() => {
+    pageHash();
+  }, [location.hash]);
 
   return (
     <div onMouseOver={handleOn}>
@@ -102,12 +117,17 @@ const MainPage = () => {
         </Section>
 
         <Section>
-          <Section4Box></Section4Box>
+          <Section4Box>
+            <SloganTxtRight id={textOn ? "ani" : undefined}>
+              EXPAND YOUR MIND
+            </SloganTxtRight>
+            <SloganTxtLeft id={textOn ? "ani" : undefined}>
+              CHANGE YOUR WORLD
+            </SloganTxtLeft>
+          </Section4Box>
         </Section>
 
-        <Section>
-          <Section4Box></Section4Box>
-        </Section>
+        <Section>{/* <Section5Box></Section5Box> */}</Section>
 
         <Section>
           <div>섹션6</div>
@@ -249,12 +269,51 @@ const PLcontent = styled.div`
   padding-top: 8px;
 `;
 const Section4Box = styled.div`
-  width: 74%;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+`;
+const Ani_righttext = keyframes`
+  0%{
+    right:-100%;
+  }
+  100%{
+    right: 0;
+  }
+`;
+const SloganTxtRight = styled.div`
+  position: absolute;
+  font-size: 7vw;
+  font-weight: 600;
+  right: -100%;
+  top: 30%;
+  &#ani {
+    animation: ${Ani_righttext} 0.5s ease;
+    animation-fill-mode: forwards;
+  }
+`;
+const Ani_lefttext = keyframes`
+  0%{
+    left:-100%;
+  }
+  100%{
+    left: 0;
+  }
+`;
+const SloganTxtLeft = styled.div`
+  position: absolute;
+  font-size: 7vw;
+  font-weight: 600;
+  left: -100%;
+  bottom: 30%;
+  &#ani {
+    animation: ${Ani_lefttext} 0.5s ease;
+    animation-fill-mode: forwards;
+    animation-delay: 0.3s;
+  }
 `;
