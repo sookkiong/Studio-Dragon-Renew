@@ -158,26 +158,50 @@ const MainPage = () => {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                width: "60%",
-                height: "50%",
+                width: "65%",
+                height: "55%",
                 marginTop: "60px",
               }}
             >
-              <FirstItem></FirstItem>
+              <FirstItem bg={firstArticle.id}>
+                <FirstItemExp>
+                  <div style={{ textAlign: "justify" }}>
+                    {firstArticle.title}
+                  </div>
+                  <div style={{ textAlign: "right", padding: "5px 0 15px" }}>
+                    {firstArticle.date}
+                  </div>
+                  <div style={{ textAlign: "right" }}>자세히 보기 Click</div>
+                </FirstItemExp>
+              </FirstItem>
 
-              <div style={{ width: "60%" }}>
-                <table>
+              <NewsBox>
+                <table
+                  style={{
+                    borderCollapse: "collapse",
+                    width: "100%",
+                    display: "block",
+                  }}
+                >
                   {fiveArticle.map((value) => {
                     return (
-                      <tr>
-                        <th>{value.title}</th>
-                        <td>{value.date}</td>
-                      </tr>
+                      <NewsTr>
+                        <NewsContentTd id="hover">{value.title}</NewsContentTd>
+                        <NewsDateTd>{value.date}</NewsDateTd>
+                      </NewsTr>
                     );
                   })}
                 </table>
-                <div>기사 더 보기 →</div>
-              </div>
+                <div
+                  style={{
+                    width: "100%",
+                    textAlign: "right",
+                    paddingTop: "30px",
+                  }}
+                >
+                  기사 더 보기 →
+                </div>
+              </NewsBox>
             </div>
           </Section6Box>
         </Section>
@@ -424,6 +448,54 @@ const Section6Box = styled.div`
 `;
 const FirstItem = styled.div`
   width: 35%;
-  border: 1px solid red;
-  background: url("/img/");
+  background: url("/img/ap${(props) => props.bg}.jpg") no-repeat 80% center;
+  background-size: cover;
+  position: relative;
+`;
+const FirstItemExp = styled.div`
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background-color: rgba(0, 46, 115, 0.5);
+  color: #fff;
+  padding: 5%;
+  box-sizing: border-box;
+`;
+const NewsBox = styled.div`
+  width: 55%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+`;
+const NewsTr = styled.tr`
+  border-bottom: 1px solid #000;
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  &:hover {
+    #hover {
+      font-weight: 500;
+    }
+  }
+`;
+const NewsContentTd = styled.td`
+  width: 70%;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  padding: 1.5vw 0;
+  box-sizing: border-box;
+  margin: 0;
+`;
+const NewsDateTd = styled.td`
+  padding: 1.5vw 0;
+  box-sizing: border-box;
+  display: block;
+  color: #7c7c7c;
+  font-weight: 300;
 `;
