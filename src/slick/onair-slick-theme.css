@@ -28,14 +28,14 @@
 }
 .slick-prev
 {
-    left: 0;
-    background: url("./on_prev_h.png") no-repeat center center;
+    left: -5%;
+    background: url("./on_prev.png") no-repeat center center;
     background-size: contain;
 }
 .slick-next
 {
-    right: 0;
-    background: url("./on_next_h.png") no-repeat center center;
+    right: -5%;
+    background: url("./on_next.png") no-repeat center center;
     background-size: contain;
 }
 /* 

@@ -15,7 +15,6 @@ const MainPage = () => {
   const location = useLocation();
   const [workOn, setWorkOn] = useState(false);
   const [textOn, setTextOn] = useState(false);
-  const [underline, setUnderline] = useState(false);
   const firstArticle = ArticleList.find((element) => element.id === 1);
   const fiveArticle = ArticleList.slice(0, 5);
 
@@ -46,6 +45,7 @@ const MainPage = () => {
   return (
     <div onMouseOver={handleOn}>
       <SectionsContainer {...options}>
+        {/* HOME */}
         <Section>
           <Section1Box>
             <MainText>
@@ -63,6 +63,7 @@ const MainPage = () => {
           </Section1Box>
         </Section>
 
+        {/* ONAIR 섹션 */}
         <Section>
           <Section2Box>
             <div style={{ textAlign: "center" }}>
@@ -76,6 +77,7 @@ const MainPage = () => {
           </Section2Box>
         </Section>
 
+        {/* WORKS 섹션 */}
         <Section>
           <Section3Box>
             <TitleNMore>
@@ -118,6 +120,7 @@ const MainPage = () => {
           </Section3Box>
         </Section>
 
+        {/* SLOGAN 섹션 */}
         <Section>
           <Section4Box>
             <SloganTxtRight id={textOn ? "ani" : undefined}>
@@ -129,6 +132,7 @@ const MainPage = () => {
           </Section4Box>
         </Section>
 
+        {/* RECRUIT 섹션 */}
         <Section>
           <Section5Box>
             <Section5Content>
@@ -145,6 +149,7 @@ const MainPage = () => {
           </Section5Box>
         </Section>
 
+        {/* NEWS 섹션 */}
         <Section>
           <Section6Box>
             <div style={{ textAlign: "center" }}>
@@ -154,17 +159,14 @@ const MainPage = () => {
               </SectionExplain>
             </div>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "65%",
-                height: "55%",
-                marginTop: "60px",
-              }}
-            >
-              <FirstItem bg={firstArticle.id}>
-                <FirstItemExp>
+            <ContainNewsBox>
+              <FirstItem
+                bg={firstArticle.id}
+                onClick={() =>
+                  navigate(`/article/detail?id=${firstArticle.id}`)
+                }
+              >
+                <FirstItemExp id="hover">
                   <div style={{ textAlign: "justify" }}>
                     {firstArticle.title}
                   </div>
@@ -185,24 +187,22 @@ const MainPage = () => {
                 >
                   {fiveArticle.map((value) => {
                     return (
-                      <NewsTr>
+                      <NewsTr
+                        onClick={() =>
+                          navigate(`/article/detail?id=${value.id}`)
+                        }
+                      >
                         <NewsContentTd id="hover">{value.title}</NewsContentTd>
                         <NewsDateTd>{value.date}</NewsDateTd>
                       </NewsTr>
                     );
                   })}
                 </table>
-                <div
-                  style={{
-                    width: "100%",
-                    textAlign: "right",
-                    paddingTop: "30px",
-                  }}
-                >
+                <GoMoreArticle onClick={() => navigate("/article")}>
                   기사 더 보기 →
-                </div>
+                </GoMoreArticle>
               </NewsBox>
-            </div>
+            </ContainNewsBox>
           </Section6Box>
         </Section>
       </SectionsContainer>
@@ -275,6 +275,13 @@ const SectionExplain = styled.span`
   padding: 0 10px;
   margin-top: 15px;
 `;
+const ContainNewsBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 65%;
+  height: 55%;
+  margin-top: 60px;
+`;
 const Section3Box = styled.div`
   width: 74%;
   height: 100vh;
@@ -296,8 +303,25 @@ const ViewMore = styled.div`
   margin-bottom: 5px;
   cursor: pointer;
   font-weight: 500;
+  position: relative;
+  ::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #000;
+
+    transform-origin: 0% 50%;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+  }
   &:hover {
-    color: #7c7c7c;
+    ::after {
+      transform: scaleX(1);
+    }
   }
 `;
 const PopularUL = styled.ul`
@@ -423,7 +447,7 @@ const GoRecruit = styled.span`
   ::after {
     position: absolute;
     left: 0;
-    bottom: -2px;
+    bottom: -3px;
     content: "";
     width: 100%;
     height: 1px;
@@ -451,15 +475,23 @@ const FirstItem = styled.div`
   background: url("/img/ap${(props) => props.bg}.jpg") no-repeat 80% center;
   background-size: cover;
   position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  &:hover {
+    #hover {
+      bottom: 0%;
+    }
+  }
 `;
 const FirstItemExp = styled.div`
   width: 100%;
   position: absolute;
-  bottom: 0;
+  bottom: -10%;
   background-color: rgba(0, 46, 115, 0.5);
   color: #fff;
   padding: 5%;
   box-sizing: border-box;
+  transition: bottom 0.5s;
 `;
 const NewsBox = styled.div`
   width: 55%;
@@ -498,4 +530,30 @@ const NewsDateTd = styled.td`
   display: block;
   color: #7c7c7c;
   font-weight: 300;
+`;
+const GoMoreArticle = styled.div`
+  width: 100%;
+  text-align: right;
+  padding-top: 30px;
+  cursor: pointer;
+  position: relative;
+  ::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -3px;
+    right: 0;
+    width: 100px;
+    height: 1px;
+    background-color: #000;
+
+    transform-origin: 0% 50%;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+  }
+  &:hover {
+    ::after {
+      transform: scaleX(1);
+    }
+  }
 `;
