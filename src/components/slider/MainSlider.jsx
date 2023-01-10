@@ -1,7 +1,8 @@
 import Slider from "react-slick";
+import styled from "styled-components";
 import { MainSliderItem } from "../Main";
-import "../../slick/main-slick.css";
-import "../../slick/main-slick-theme.css";
+import "../../slick/slick.css";
+import "../../slick/slick-theme.css";
 
 const MainSlider = () => {
   const settings = {
@@ -25,7 +26,7 @@ const MainSlider = () => {
         marginRight: "15%",
       }}
     >
-      <Slider {...settings}>
+      <MainSlideStyle {...settings}>
         {MainSliderItem.map((slide) => {
           return (
             <div key={slide.id}>
@@ -33,8 +34,47 @@ const MainSlider = () => {
             </div>
           );
         })}
-      </Slider>
+      </MainSlideStyle>
     </div>
   );
 };
 export default MainSlider;
+
+const MainSlideStyle = styled(Slider)`
+  .slick-prev,
+  .slick-next {
+    font-size: 0;
+    line-height: 0;
+
+    position: absolute;
+    top: 75%;
+    left: 0;
+
+    display: block;
+
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+
+    cursor: pointer;
+
+    color: transparent;
+    border: none;
+    outline: none;
+    background: transparent;
+    z-index: 5;
+  }
+  .slick-prev {
+    left: 80%;
+    background: url("/img/prev.png") no-repeat center center;
+    background-size: contain;
+  }
+  .slick-next {
+    left: 90%;
+    background: url("/img/next.png") no-repeat center center;
+    background-size: contain;
+  }
+`;

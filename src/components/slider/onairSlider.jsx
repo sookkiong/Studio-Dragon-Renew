@@ -2,8 +2,8 @@ import Slider from "react-slick";
 import { Works } from "../Contents";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
-import "../../slick/onair-slick.css";
-import "../../slick/onair-slick-theme.css";
+import "../../slick/slick.css";
+import "../../slick/slick-theme.css";
 
 const OnairSlider = () => {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const OnairSlider = () => {
         boxSizing: "border-box",
       }}
     >
-      <Slider {...settings}>
+      <OnairSlideStyle {...settings}>
         {items.map((work) => {
           return (
             <Item
@@ -40,7 +40,7 @@ const OnairSlider = () => {
             />
           );
         })}
-      </Slider>
+      </OnairSlideStyle>
     </div>
   );
 };
@@ -52,4 +52,44 @@ const Item = styled.div`
   background: url("/img/wc${(props) => props.bg}.jpg") no-repeat center center;
   background-size: cover;
   cursor: pointer;
+`;
+const OnairSlideStyle = styled(Slider)`
+  .slick-prev,
+  .slick-next {
+    font-size: 0;
+    line-height: 0;
+
+    position: absolute;
+    top: 50%;
+
+    display: block;
+
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+
+    cursor: pointer;
+
+    color: transparent;
+    border: none;
+    outline: none;
+    background: transparent;
+    z-index: 5;
+  }
+  .slick-prev {
+    left: -5%;
+    background: url("/img/on_prev.png") no-repeat center center;
+    background-size: contain;
+  }
+  .slick-next {
+    right: -5%;
+    background: url("/img/on_next.png") no-repeat center center;
+    background-size: contain;
+  }
+  .slick-slide {
+    margin-right: 25px;
+  }
 `;
