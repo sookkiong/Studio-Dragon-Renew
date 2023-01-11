@@ -13,14 +13,14 @@ const SideBar = () => {
     { id: "#news", name: "NEWS" },
   ];
 
-  const [scroll, setScroll] = useState(location.hash);
+  const [scroll, setScroll] = useState("#home");
 
   useEffect(() => {
     setScroll(location.hash);
   }, [location.hash]);
 
   const setColorId = () => {
-    if (scroll !== "home") {
+    if (scroll !== "#home") {
       return "colored";
     }
   };
@@ -36,12 +36,13 @@ const SideBar = () => {
           return (
             <label key={v.name}>
               <CustomLink
+                id={setColorId()}
                 name="page"
                 value={v.id}
                 checked={v.id === scroll}
                 readOnly
               />
-              <FormCheckText id={setColorId()}>{v.name}</FormCheckText>
+              <FormCheckText>{v.name}</FormCheckText>
             </label>
           );
         })}
@@ -71,19 +72,6 @@ const FormCheckText = styled.span`
   font-size: 13px;
   letter-spacing: 1.4px;
   position: relative;
-
-  &#selected {
-    ::after {
-      position: absolute;
-      top: calc(50% - 1px);
-      right: 0;
-      content: "";
-      display: block;
-      width: 50px;
-      height: 2px;
-      background-color: #fff;
-    }
-  }
 `;
 
 const CustomLink = styled.input.attrs({ type: "radio" })`
@@ -93,9 +81,40 @@ const CustomLink = styled.input.attrs({ type: "radio" })`
   &:checked + ${FormCheckText} {
     color: #fff;
     font-weight: 600;
+    ::after {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      content: "";
+      display: block;
+      width: 2vw;
+      height: 3px;
+      background-color: #fff;
+    }
   }
   &:hover + ${FormCheckText} {
     color: #fff;
     font-weight: 600;
+  }
+
+  &#colored {
+    &:checked + ${FormCheckText} {
+      color: #000;
+      ::after {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        content: "";
+        display: block;
+        width: 2vw;
+        height: 3px;
+        background-color: #000;
+      }
+    }
+  }
+  &#colored {
+    &:hover + ${FormCheckText} {
+      color: #000;
+    }
   }
 `;

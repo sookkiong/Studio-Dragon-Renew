@@ -210,6 +210,7 @@ const ExplainBox = styled.div`
   align-items: center;
   height: 140px;
   padding: 0 30px;
+  text-align: justify;
 `;
 const GoList = styled.button`
   display: block;
