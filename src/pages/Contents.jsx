@@ -29,8 +29,6 @@ const Contents = () => {
     else return result.filter((value) => value.onAir === poster);
   };
 
-  console.log(location);
-
   return (
     <div onMouseOver={handleOn} onClick={categoryOff}>
       <PageTop>
@@ -99,20 +97,14 @@ const Contents = () => {
               <Work
                 bg={value.id}
                 key={value.id}
-                onMouseOver={(e) => {
-                  e.stopPropagation();
-                  setInfoOn(value.id);
-                }}
                 onClick={() => navigate(`/contents/detail?id=${value.id}`)}
               >
-                {infoOn === value.id ? (
-                  <WorkInfoBox>
-                    <OnairBox>{value.onAir}</OnairBox>
-                    <TitleBox>{value.title}</TitleBox>
-                    <Peoples id="actor">출연: {value.actors}</Peoples>
-                    <Peoples id="pd">연출: {value.producer}</Peoples>
-                  </WorkInfoBox>
-                ) : undefined}
+                <WorkInfoBox id="detail">
+                  <OnairBox>{value.onAir}</OnairBox>
+                  <TitleBox>{value.title}</TitleBox>
+                  <Peoples id="actor">출연: {value.actors}</Peoples>
+                  <Peoples id="pd">연출: {value.producer}</Peoples>
+                </WorkInfoBox>
               </Work>
             );
           })}
@@ -207,10 +199,17 @@ const Work = styled.div`
   background-size: cover;
   cursor: pointer;
   position: relative;
+  overflow: hidden;
+
+  &:hover {
+    #detail {
+      bottom: 0;
+    }
+  }
 `;
 const WorkInfoBox = styled.div`
   position: absolute;
-  bottom: 0;
+  bottom: -200px;
   width: 100%;
   height: 200px;
   background-color: rgba(0, 56, 123, 0.5);
@@ -218,6 +217,7 @@ const WorkInfoBox = styled.div`
   padding: 20px;
   box-sizing: border-box;
   z-index: 5;
+  transition: bottom 0.5s;
 `;
 const OnairBox = styled.span`
   border: 1px solid #fff;
