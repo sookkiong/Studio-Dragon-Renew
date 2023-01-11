@@ -218,16 +218,6 @@ const MainPage = () => {
 
 export default MainPage;
 
-const GoTop = styled.button`
-  padding: 25px;
-  background-color: #000;
-  color: #fff;
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  border: none;
-  display: block;
-`;
 const MainText = styled.div`
   z-index: 100;
   color: #fff;
@@ -569,6 +559,7 @@ const GoMoreArticle = styled.div`
     transition: transform 0.3s ease-in-out;
   }
   &:hover {
+    font-weight: 500;
     ::after {
       transform: scaleX(1);
     }

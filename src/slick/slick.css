@@ -16,17 +16,19 @@
     -ms-touch-action: pan-y;
         touch-action: pan-y;
     -webkit-tap-highlight-color: transparent;
+
 }
 
 .slick-list
 {
     position: relative;
-
+    
     display: block;
     overflow: hidden;
 
     margin: 0;
     padding: 0;
+    
 }
 .slick-list:focus
 {

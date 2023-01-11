@@ -91,5 +91,15 @@ const OnairSlideStyle = styled(Slider)`
   }
   .slick-slide {
     margin-right: 25px;
+    height: 100%;
+  }
+  .slick-list {
+    position: relative;
+
+    display: block;
+    overflow: hidden;
+
+    margin: 0;
+    padding: 0;
   }
 `;

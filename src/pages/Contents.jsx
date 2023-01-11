@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { useState } from "react";
 import { Works } from "../components/Contents";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Contents = () => {
   let navigate = useNavigate();
+  let location = useLocation();
   const [category, setCategory] = useState("방영작 전체");
   const [on, setOn] = useState(false);
   const [poster, setPoster] = useState("all");
@@ -26,6 +28,8 @@ const Contents = () => {
     if (poster === "all") return result;
     else return result.filter((value) => value.onAir === poster);
   };
+
+  console.log(location);
 
   return (
     <div onMouseOver={handleOn} onClick={categoryOff}>

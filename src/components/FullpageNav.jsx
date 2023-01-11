@@ -18,7 +18,7 @@ const SideBar = () => {
   window.addEventListener("wheel", (e) => {
     setScroll(window.location.href.split("#")[1]);
   });
-  console.log(scroll);
+  console.log(window.location.href.split("#")[1]);
 
   return (
     <SideDiv style={{ zIndex: "1" }}>
@@ -51,7 +51,7 @@ export default SideBar;
 const SideDiv = styled.div`
   width: 7%;
   position: fixed;
-  right: 5%;
+  right: 2%;
   top: 45%;
   div {
     display: flex;

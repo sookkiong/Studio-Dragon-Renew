@@ -5,9 +5,19 @@ import { useLocation } from "react-router-dom";
 const WhiteLayout = () => {
   const location = useLocation();
 
+  const setId = () => {
+    if (location.hash === "#home") {
+      return "white";
+    } else if (location.hash === "") {
+      return "white";
+    } else {
+      return "simple";
+    }
+  };
+
   return (
     <>
-      <Header id={location.hash === "#home" ? "white" : "simple"} />
+      <Header id={setId()} />
       <Outlet />
     </>
   );
