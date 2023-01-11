@@ -12,7 +12,7 @@ const Header = ({ id }) => {
 
   return (
     <Wrapper id={id}>
-      <HeaderWrap>
+      <HeaderWrap id={id}>
         <Menu id={id} onClick={() => setMenuOn(true)} />
         <Logo id={id} onClick={() => navigate("/")} />
         <Lang>
@@ -41,7 +41,8 @@ export default Header;
 const Wrapper = styled.div`
   width: 100%;
   z-index: 100;
-  &#white {
+  &#white,
+  &#simple {
     position: absolute;
   }
   &#black {
@@ -55,6 +56,9 @@ const HeaderWrap = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  &#simple {
+    width: 90%;
+  }
 `;
 const Menu = styled.div`
   width: 35px;
@@ -64,7 +68,8 @@ const Menu = styled.div`
   &#white {
     background: url("/img/sub_ham_w.png") no-repeat center center;
   }
-  &#black {
+  &#black,
+  &#simple {
     background: url("/img/sub_ham.png") no-repeat center center;
   }
 `;
@@ -78,6 +83,9 @@ const Logo = styled.div`
   }
   &#black {
     background: url("/img/logo.png") no-repeat center center;
+  }
+  &#simple {
+    display: none;
   }
 `;
 const Lang = styled.ul`
@@ -99,7 +107,8 @@ const List = styled.li`
     color: #fff;
     font-weight: 500;
   }
-  &#selected_black {
+  &#selected_black,
+  &#selected_simple {
     color: #000;
     font-weight: 500;
   }

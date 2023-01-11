@@ -3,6 +3,7 @@ import MainSlider from "../components/slider/MainSlider";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router";
+import { useRecoilState } from "recoil";
 import styled, { keyframes } from "styled-components";
 import "../fullpage/SectionsContainer.js";
 import OnairSlider from "../components/slider/onairSlider";
@@ -17,7 +18,6 @@ const MainPage = () => {
   const [textOn, setTextOn] = useState(false);
   const firstArticle = ArticleList.find((element) => element.id === 1);
   const fiveArticle = ArticleList.slice(0, 5);
-
   const handleOn = () => {
     setWorkOn(false);
   };
@@ -88,7 +88,9 @@ const MainPage = () => {
                 </SectionExplain>
               </div>
 
-              <ViewMore>VIEW MORE →</ViewMore>
+              <ViewMore onClick={() => navigate("/contents")}>
+                VIEW MORE →
+              </ViewMore>
             </TitleNMore>
 
             <div style={{ width: "85%", height: "60%" }}>
@@ -144,7 +146,9 @@ const MainPage = () => {
                 업계 리더로서 콘텐츠 산업의 건전한 생태계 조성에 힘쓰고, 관련한
                 일자리 창출을 실천합니다.
               </RecruitKor>
-              <GoRecruit>채용정보 보러가기 →</GoRecruit>
+              <GoRecruit onClick={() => navigate("/recruit")}>
+                채용정보 보러가기 →
+              </GoRecruit>
             </Section5Content>
           </Section5Box>
         </Section>
@@ -212,6 +216,16 @@ const MainPage = () => {
 
 export default MainPage;
 
+const GoTop = styled.button`
+  padding: 25px;
+  background-color: #000;
+  color: #fff;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  border: none;
+  display: block;
+`;
 const MainText = styled.div`
   z-index: 100;
   color: #fff;
@@ -261,6 +275,7 @@ const Section2Box = styled.div`
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  overflow: hidden;
 `;
 const SectionTitle = styled.span`
   font-size: 60px;
