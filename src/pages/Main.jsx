@@ -10,6 +10,7 @@ import OnairSlider from "../components/slider/onairSlider";
 import { popularWorks } from "../components/Main";
 import { Works } from "../components/Contents";
 import { ArticleList } from "../components/Article";
+import SideBar from "../components/FullpageNav";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const MainPage = () => {
   let options = {
     anchors: ["home", "onAir", "works", "slogan", "recruit", "news"],
     delay: 800,
-    navigation: true,
+    navigation: false,
   };
   const pageHash = () => {
     if (location.hash === "#slogan") {
@@ -44,6 +45,7 @@ const MainPage = () => {
 
   return (
     <div onMouseOver={handleOn}>
+      <SideBar />
       <SectionsContainer {...options}>
         {/* HOME */}
         <Section>
