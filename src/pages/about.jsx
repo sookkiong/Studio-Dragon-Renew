@@ -1,11 +1,29 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 
 const About = () => {
+  let [titleOn, setTitleOn] = useState("");
+  let [drop, setDrop] = useState("");
+  let [sloganUp, setSloganUp] = useState("");
+
+  const { ref, inView } = useInView();
+  useEffect(() => {
+    setTitleOn("on");
+  }, []);
+
+  useEffect(() => {
+    if (inView) setDrop("drop");
+  }, [inView]);
+
+  useEffect(() => {
+    if (inView) setSloganUp("up");
+  }, [inView]);
+
   return (
-    <>
+    <div>
       <Section1>
-        <TitleWrap>
+        <TitleWrap id={titleOn}>
           <Title>ABOUT</Title>
           <Explain>
             케이블, 지상파, 모바일 드라마와 글로벌 방영 드라마의 기획
@@ -18,13 +36,13 @@ const About = () => {
       </Section1>
 
       <Section2>
-        <DropText>BUSINESS</DropText>
+        <DropText id={drop}>BUSINESS</DropText>
 
         <Boxes>
           <Box>
             <BImgBox bg="1"></BImgBox>
             <SmallTitle>TRY SOMETHING NEW</SmallTitle>
-            <BSTitle>
+            <BSTitle ref={ref}>
               우리는 늘 새로운 시도로 시청자들에게 보는 즐거움을 제공합니다.
             </BSTitle>
             <BSPara>
@@ -59,12 +77,12 @@ const About = () => {
 
       <Section3>
         <Sect3Inner>
-          <Sect3Slogan>
+          <Sect3Slogan id={sloganUp}>
             DRAMA PARAGON
             <br />
             여의주를 품은 아시아의 龍
           </Sect3Slogan>
-          <Sect3ImgBox>
+          <Sect3ImgBox ref={ref}>
             <img
               src="/img/slogan.png"
               alt="슬로건 이미지"
@@ -116,7 +134,7 @@ const About = () => {
           </Sect5Para>
         </Sect5BG>
       </Section5>
-    </>
+    </div>
   );
 };
 
@@ -134,6 +152,12 @@ const TitleWrap = styled.div`
   width: 35%;
   transition: margin-top 0.5s;
   margin-top: 100px;
+  opacity: 0;
+  transition: all 1s;
+  &#on {
+    margin-top: 0;
+    opacity: 1;
+  }
 `;
 const Title = styled.div`
   background-color: #000;
@@ -173,6 +197,11 @@ const DropText = styled.span`
   top: 285px;
   left: -10%;
   transform: rotate(90deg);
+  transition: all 8s ease-in;
+
+  &#drop {
+    top: 820px;
+  }
 `;
 const Boxes = styled.div`
   width: 50%;
@@ -216,18 +245,31 @@ const Section3 = styled.div`
 `;
 const Sect3Inner = styled.div`
   width: 70%;
+  height: 700px;
+  position: relative;
 `;
 const Sect3Slogan = styled.div`
   font-size: 75px;
   border-left: 8px solid #003a76;
   text-align: right;
-  padding-right: 5%;
+  padding-right: 80px;
+  width: 100%;
   font-weight: 600;
   line-height: 78px;
+  position: absolute;
+  top: 200px;
+  opacity: 0;
+  transition: all 1s;
+
+  &#up {
+    opacity: 1;
+    top: 0;
+  }
 `;
 const Sect3ImgBox = styled.div`
   width: 100%;
-  margin-top: 30px;
+  bottom: 0%;
+  position: absolute;
 `;
 
 //SECTION4
