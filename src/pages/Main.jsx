@@ -3,14 +3,13 @@ import MainSlider from "../components/slider/MainSlider";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router";
-import { useRecoilState } from "recoil";
 import styled, { keyframes } from "styled-components";
 import "../fullpage/SectionsContainer.js";
 import OnairSlider from "../components/slider/onairSlider";
 import { popularWorks } from "../components/Main";
 import { Works } from "../components/Contents";
 import { ArticleList } from "../components/Article";
-import SideBar from "../components/FullpageNav";
+import SideBar from "../components/SidebarNav";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -38,10 +37,12 @@ const MainPage = () => {
       setTextOn(false);
     }
   };
-
   useEffect(() => {
     pageHash();
   }, [location.hash]);
+  useEffect(() => {
+    location.hash = "#home";
+  }, []);
 
   return (
     <div onMouseOver={handleOn}>
@@ -194,6 +195,7 @@ const MainPage = () => {
                   {fiveArticle.map((value) => {
                     return (
                       <NewsTr
+                        key={value.id}
                         onClick={() =>
                           navigate(`/article/detail?id=${value.id}`)
                         }

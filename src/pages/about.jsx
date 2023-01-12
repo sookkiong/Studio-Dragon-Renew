@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useEffect, useState } from "react";
 
 const About = () => {
   return (
@@ -13,7 +14,7 @@ const About = () => {
           </Explain>
         </TitleWrap>
 
-        <ImgBox></ImgBox>
+        <ImgBox />
       </Section1>
 
       <Section2>
@@ -127,9 +128,12 @@ const Section1 = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 `;
 const TitleWrap = styled.div`
-  width: 32%;
+  width: 35%;
+  transition: margin-top 0.5s;
+  margin-top: 100px;
 `;
 const Title = styled.div`
   background-color: #000;

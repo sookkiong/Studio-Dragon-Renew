@@ -47,6 +47,7 @@ const Articles = () => {
   useEffect(() => {
     setSearch(searchValue);
   }, [searchValue]);
+
   return (
     <>
       <PageTop>
@@ -130,6 +131,11 @@ const Articles = () => {
               >
                 이전 페이지
               </GoPageBtn>
+
+              {searchValue ? (
+                <GoList onClick={() => navigate("/article")}>글 목록</GoList>
+              ) : undefined}
+
               <GoPageBtn
                 disabled={nextOff()}
                 onClick={() => {
@@ -283,7 +289,7 @@ const DateBox = styled.div`
 `;
 const ButtonWrap = styled.div`
   text-align: center;
-  padding: 50px 0;
+  margin: 50px 0 200px;
 `;
 const GoPageBtn = styled.button`
   cursor: pointer;
@@ -304,6 +310,15 @@ const GoPageBtn = styled.button`
     font-weight: ${(props) => (props.disabled ? "400" : "600")};
   }
 `;
+const GoList = styled.button`
+  cursor: pointer;
+  padding: 10px 15px;
+  margin: 0 10px;
+  border: 1px solid #003371;
+  background: #003371;
+  color: #fff;
+`;
+
 const SearchNone = styled.div`
   text-align: center;
   border-top: 1px solid #000;
