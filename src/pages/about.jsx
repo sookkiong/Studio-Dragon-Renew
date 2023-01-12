@@ -6,19 +6,32 @@ const About = () => {
   let [titleOn, setTitleOn] = useState("");
   let [drop, setDrop] = useState("");
   let [sloganUp, setSloganUp] = useState("");
+  let [goalUp, setGoalUp] = useState("");
+  let [lineUp, setLineUp] = useState("");
 
-  const { ref, inView } = useInView();
+  const dropRef = useInView();
+  const upRef = useInView();
+  const goalRef = useInView();
+  const lineRef = useInView();
+
   useEffect(() => {
     setTitleOn("on");
   }, []);
 
   useEffect(() => {
-    if (inView) setDrop("drop");
-  }, [inView]);
+    if (dropRef.inView) setDrop("drop");
+  }, [dropRef.inView]);
 
   useEffect(() => {
-    if (inView) setSloganUp("up");
-  }, [inView]);
+    if (upRef.inView) setSloganUp("up");
+  }, [upRef.inView]);
+
+  useEffect(() => {
+    if (goalRef.inView) setGoalUp("goal");
+  }, [goalRef.inView]);
+  useEffect(() => {
+    if (lineRef.inView) setLineUp("line");
+  }, [lineRef.inView]);
 
   return (
     <div>
@@ -42,7 +55,7 @@ const About = () => {
           <Box>
             <BImgBox bg="1"></BImgBox>
             <SmallTitle>TRY SOMETHING NEW</SmallTitle>
-            <BSTitle ref={ref}>
+            <BSTitle ref={dropRef.ref}>
               우리는 늘 새로운 시도로 시청자들에게 보는 즐거움을 제공합니다.
             </BSTitle>
             <BSPara>
@@ -82,7 +95,7 @@ const About = () => {
             <br />
             여의주를 품은 아시아의 龍
           </Sect3Slogan>
-          <Sect3ImgBox ref={ref}>
+          <Sect3ImgBox ref={upRef.ref}>
             <img
               src="/img/slogan.png"
               alt="슬로건 이미지"
@@ -95,12 +108,12 @@ const About = () => {
 
       <Section4>
         <VMWrap>
-          <VMTitle>
+          <VMTitle ref={goalRef.ref}>
             스튜디오 드래곤의
             <br />
             3가지 목표
           </VMTitle>
-          <VMul>
+          <VMul id={goalUp}>
             <VMList bg="1" loc="16px center">
               국내와 아시아에 안주하지 않고 타임워너, 월트디즈니와 어깨를 나란히
               하는 TOP10 미디어 컨텐츠 회사로 도약하겠습니다.
@@ -123,9 +136,9 @@ const About = () => {
         </VMSlogan>
       </Section4>
 
-      <Section5>
+      <Section5 ref={lineRef.ref}>
         <Sect5BG>
-          <Sect5Para>
+          <Sect5Para id={lineUp}>
             내가 보여 주고 싶은 춤 네가 보여줄 수 있을 것 같았어
             <br />난 네가 무대에 서는 걸 꼭 봐야겠어.
             <DramaLine>
@@ -153,7 +166,7 @@ const TitleWrap = styled.div`
   transition: margin-top 0.5s;
   margin-top: 100px;
   opacity: 0;
-  transition: all 1s;
+  transition: all 1.6s;
   &#on {
     margin-top: 0;
     opacity: 1;
@@ -259,7 +272,8 @@ const Sect3Slogan = styled.div`
   position: absolute;
   top: 200px;
   opacity: 0;
-  transition: all 1s;
+  transition: all 2s;
+  box-sizing: border-box;
 
   &#up {
     opacity: 1;
@@ -298,7 +312,15 @@ const VMul = styled.ul`
   margin: 0;
   padding: 0;
   text-align: justify;
-  margin-top: 60px;
+  margin-top: 260px;
+  opacity: 0;
+  transition: all 2s;
+  transition-delay: 1s;
+
+  &#goal {
+    margin-top: 60px;
+    opacity: 1;
+  }
 `;
 const VMList = styled.li`
   margin-bottom: 80px;
@@ -329,11 +351,19 @@ const Sect5BG = styled.div`
   background-size: cover;
 `;
 const Sect5Para = styled.p`
-  padding: 100px;
+  padding: 200px 100px;
   color: #fff;
   font-size: 30px;
   font-weight: 500;
   letter-spacing: 1px;
+  opacity: 0;
+  transition: all 1.6s;
+  transition-delay: 1s;
+
+  &#line {
+    opacity: 1;
+    padding: 100px 100px;
+  }
 `;
 const DramaLine = styled.span`
   display: block;
