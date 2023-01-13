@@ -1,31 +1,38 @@
 import styled from "styled-components";
+import { useInView } from "react-intersection-observer";
+import { useEffect, useState } from "react";
 
 const Contact = () => {
-  return (
-    <>
-      <Wrapper>
-        <LeftIMG />
+  const [up, setUp] = useState("");
+  const upRef = useInView();
 
-        <RightPart>
-          <Text id="title">
-            STUDIO
-            <br />
-            DRAGON
-          </Text>
-          <Text>(주)스튜디오 드래곤</Text>
-          <Text id="address_k">
-            서울특별시 마포구 매봉산로 75, 17층
-            <br />
-            (상암동, DDMC)
-          </Text>
-          <Text id="address_E">
-            Studio Dragon Corporation, 17F <br />
-            75, Mebongsan-ro, Mapo-gu, Seoul
-          </Text>
-          <Mail>studio.dragon@cj.net</Mail>
-        </RightPart>
-      </Wrapper>
-    </>
+  useEffect(() => {
+    if (upRef.inView) setUp("up");
+  }, [upRef.inView]);
+
+  return (
+    <Wrapper ref={upRef.ref}>
+      <LeftIMG />
+
+      <RightPart id={up}>
+        <Text id="title">
+          STUDIO
+          <br />
+          DRAGON
+        </Text>
+        <Text>(주)스튜디오 드래곤</Text>
+        <Text id="address_k">
+          서울특별시 마포구 매봉산로 75, 17층
+          <br />
+          (상암동, DDMC)
+        </Text>
+        <Text id="address_E">
+          Studio Dragon Corporation, 17F <br />
+          75, Mebongsan-ro, Mapo-gu, Seoul
+        </Text>
+        <Mail>studio.dragon@cj.net</Mail>
+      </RightPart>
+    </Wrapper>
   );
 };
 export default Contact;
@@ -45,7 +52,14 @@ const LeftIMG = styled.div`
 const RightPart = styled.div`
   width: 58%;
   background: url("/img/map.png") no-repeat 80% 50%;
-  margin-top: 60px;
+  margin-top: 160px;
+  opacity: 0;
+  transition: all 1.5s;
+
+  &#up {
+    margin-top: 60px;
+    opacity: 1;
+  }
 `;
 const Text = styled.span`
   display: block;

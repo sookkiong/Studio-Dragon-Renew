@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Works } from "../components/Contents";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useInView } from "react-intersection-observer";
 
 const Contents = () => {
   let navigate = useNavigate();
@@ -11,6 +12,8 @@ const Contents = () => {
   const [on, setOn] = useState(false);
   const [poster, setPoster] = useState("all");
   const [infoOn, setInfoOn] = useState(false);
+  const [titleUp, setTitleUp] = useState("");
+  const upRef = useInView();
 
   const onItem = () => {
     const id = on === true ? "arrow" : undefined;
@@ -29,10 +32,14 @@ const Contents = () => {
     else return result.filter((value) => value.onAir === poster);
   };
 
+  useEffect(() => {
+    if (upRef.inView) setTitleUp("up");
+  }, [upRef.inView]);
+
   return (
     <div onMouseOver={handleOn} onClick={categoryOff}>
-      <PageTop>
-        <TopTextbox>
+      <PageTop ref={upRef.ref}>
+        <TopTextbox id={titleUp}>
           <PageTitle>CONTENTS</PageTitle>
           <PageExplain>
             스튜디오 드래곤은 웰메이드 드라마 제작을 통한 국내 드라마 콘텐츠의
@@ -123,7 +130,14 @@ const PageTop = styled.div`
   background-size: cover;
 `;
 const TopTextbox = styled.div`
-  padding: 200px;
+  padding: 250px 200px;
+  opacity: 0;
+  transition: all 1.5s;
+
+  &#up {
+    opacity: 1;
+    padding: 200px 200px;
+  }
 `;
 const PageTitle = styled.span`
   display: block;

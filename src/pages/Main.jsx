@@ -3,6 +3,7 @@ import MainSlider from "../components/slider/MainSlider";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { useLocation } from "react-router";
+import { useInView } from "react-intersection-observer";
 import styled, { keyframes } from "styled-components";
 import "../fullpage/SectionsContainer.js";
 import OnairSlider from "../components/slider/onairSlider";
@@ -18,6 +19,9 @@ const MainPage = () => {
   const [textOn, setTextOn] = useState(false);
   const firstArticle = ArticleList.find((element) => element.id === 1);
   const fiveArticle = ArticleList.slice(0, 5);
+  const [titleUp, setTitleUp] = useState("");
+  const upRef = useInView();
+
   const handleOn = () => {
     setWorkOn(false);
   };
@@ -37,12 +41,16 @@ const MainPage = () => {
       setTextOn(false);
     }
   };
+
   useEffect(() => {
     pageHash();
   }, [location.hash]);
   useEffect(() => {
     location.hash = "#home";
   }, []);
+  useEffect(() => {
+    if (upRef.inView) setTitleUp("up");
+  }, [upRef.inView]);
 
   return (
     <div onMouseOver={handleOn}>
@@ -50,8 +58,8 @@ const MainPage = () => {
       <SectionsContainer {...options}>
         {/* HOME */}
         <Section>
-          <Section1Box>
-            <MainText>
+          <Section1Box ref={upRef.ref}>
+            <MainText id={titleUp}>
               <MainTextTitle>ASIA NO.1 STUDIO</MainTextTitle>
               아시아의 콘텐츠와 라이프스타일을
               <br />
@@ -226,6 +234,14 @@ const MainText = styled.div`
   position: absolute;
   left: 13%;
   font-size: 30px;
+  top: 42%;
+  opacity: 0;
+  transition: all 1s ease-out;
+
+  &#up {
+    opacity: 1;
+    top: 40%;
+  }
 `;
 const MainTextTitle = styled.span`
   font-weight: 600;

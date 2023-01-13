@@ -1,11 +1,14 @@
 import styled from "styled-components";
 import { category } from "../components/Recruit";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { recruitList } from "../components/Recruit";
+import { useInView } from "react-intersection-observer";
 
 const Recruit = () => {
   const [inRecruit, setInRecruit] = useState("");
   const [hover, setHover] = useState("");
+  const [titleUp, setTitleUp] = useState("");
+  const upRef = useInView();
 
   const closeModal = () => {
     setInRecruit("");
@@ -19,11 +22,17 @@ const Recruit = () => {
       return "인턴";
     }
   };
+
+  useEffect(() => {
+    if (upRef.inView) setTitleUp("up");
+  }, [upRef.inView]);
+
   return (
     <div onClick={closeModal}>
-      <PageTop>
+      <PageTop ref={upRef.ref}>
         <BlackBG />
-        <TextBox>
+
+        <TextBox id={titleUp}>
           <span>RECRUIT</span>
           <TitleText>
             스튜디오 드래곤과 함께할
@@ -176,6 +185,14 @@ const BlackBG = styled.div`
 const TextBox = styled.div`
   color: #fff;
   z-index: 10;
+  opacity: 0;
+  transition: all 1.5s;
+  margin-top: 50px;
+
+  &#up {
+    opacity: 1;
+    margin-top: 0;
+  }
 `;
 const TitleText = styled.div`
   font-size: 56px;

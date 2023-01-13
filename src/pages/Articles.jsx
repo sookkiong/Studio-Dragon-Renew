@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { ArticleList } from "../components/Article";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useInView } from "react-intersection-observer";
 
 const Articles = () => {
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ const Articles = () => {
   const totalCount = ArticleList.filter((element) =>
     element["title"].includes(searchValue)
   ).length;
+  const [titleUp, setTitleUp] = useState("");
+  const upRef = useInView();
 
   const isLast =
     ArticleList.filter((element) => element.title.includes(searchValue)).slice(
@@ -48,11 +51,16 @@ const Articles = () => {
     setSearch(searchValue);
   }, [searchValue]);
 
+  useEffect(() => {
+    if (upRef.inView) setTitleUp("up");
+  }, [upRef.inView]);
+
   return (
     <>
-      <PageTop>
+      <PageTop ref={upRef.ref}>
         <BlackBG />
-        <TextBox>
+
+        <TextBox id={titleUp}>
           <PageTitle>ARTICLES</PageTitle>
           <PageExplain>
             스튜디오 드래곤의 최신소식과 언론에 보도된 자료를 보실 수 있습니다.
@@ -172,8 +180,15 @@ const BlackBG = styled.div`
   background-color: rgba(0, 0, 0, 0.2);
 `;
 const TextBox = styled.div`
-  margin-top: 210px;
+  margin-top: 260px;
   z-index: 1;
+  opacity: 0;
+  transition: all 1.5s;
+
+  &#up {
+    margin-top: 210px;
+    opacity: 1;
+  }
 `;
 const PageTitle = styled.span`
   display: block;
