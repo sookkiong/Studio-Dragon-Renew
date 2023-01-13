@@ -210,7 +210,7 @@ const DropText = styled.span`
   top: 285px;
   left: -10%;
   transform: rotate(90deg);
-  transition: all 8s ease-in;
+  transition: all 3s ease-in;
 
   &#drop {
     top: 820px;
@@ -258,7 +258,6 @@ const Section3 = styled.div`
 `;
 const Sect3Inner = styled.div`
   width: 70%;
-  height: 700px;
   position: relative;
 `;
 const Sect3Slogan = styled.div`
@@ -282,8 +281,7 @@ const Sect3Slogan = styled.div`
 `;
 const Sect3ImgBox = styled.div`
   width: 100%;
-  bottom: 0%;
-  position: absolute;
+  margin-top: 180px;
 `;
 
 //SECTION4
