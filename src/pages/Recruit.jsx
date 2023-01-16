@@ -66,7 +66,7 @@ const Recruit = () => {
                   <Name>{setName(value.type)}</Name>
                   <Explain>{value.explain}</Explain>
                   <CountWrap>
-                    <Plus>+</Plus>
+                    <Plus id="rotate">+</Plus>
                     <div>
                       <span id="yellow" style={{ fontSize: "30px" }}>
                         {value.num}
@@ -222,6 +222,9 @@ const List = styled.li`
     #yellow {
       color: yellow;
     }
+    #rotate {
+      transform: rotate(270deg);
+    }
   }
 `;
 const InText = styled.div`
@@ -259,6 +262,8 @@ const Plus = styled.div`
   height: 30px;
   text-align: center;
   line-height: 28px;
+  transform: rotate(0deg);
+  transition: all 0.5s;
 `;
 const Notice = styled.div`
   margin-bottom: 30px;
