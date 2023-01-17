@@ -31,7 +31,7 @@ const Articles = () => {
     }
   };
 
-  const prevOff = pageCount === 1;
+  let prevOff = pageCount === 1;
   const nextOff = () => {
     if (isLast) {
       return true;
