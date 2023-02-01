@@ -26,28 +26,27 @@ const MainPage = () => {
     setWorkOn(false);
   };
   const goWork = (value) => {
-    const finding = Works.find((element) => element.title === value).id;
-    return finding;
+    return Works.find((element) => element.title === value).id;
   };
   let options = {
     anchors: ["home", "onAir", "works", "slogan", "recruit", "news"],
     delay: 800,
     navigation: false,
   };
-  const pageHash = () => {
-    if (location.hash === "#slogan") {
-      setTextOn(true);
-    } else {
-      setTextOn(false);
-    }
-  };
 
   useEffect(() => {
+    const pageHash = () => {
+      if (location.hash === "#slogan") {
+        setTextOn(true);
+      } else {
+        setTextOn(false);
+      }
+    };
     pageHash();
   }, [location.hash]);
   useEffect(() => {
-    location.hash = "#home";
-  }, []);
+    if (!location.hash) location.hash = "#home";
+  }, [location]);
   useEffect(() => {
     if (upRef.inView) setTitleUp("up");
   }, [upRef.inView]);
@@ -236,11 +235,12 @@ const MainText = styled.div`
   font-size: 30px;
   top: 42%;
   opacity: 0;
-  transition: all 1s ease-out;
-
+  margin-top: 30px;
+  transition-property: opacity, margin-top;
+  transition-duration: 1s;
   &#up {
     opacity: 1;
-    top: 40%;
+    margin-top: 0px;
   }
 `;
 const MainTextTitle = styled.span`
@@ -248,6 +248,9 @@ const MainTextTitle = styled.span`
   display: block;
   font-size: 68px;
   font-family: YDestreet;
+  @media all and (max-width: 1190px) {
+    font-size: 42px;
+  }
 `;
 const Section1Box = styled.div`
   width: 100%;

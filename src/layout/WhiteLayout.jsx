@@ -6,13 +6,7 @@ const WhiteLayout = () => {
   const location = useLocation();
 
   const setId = () => {
-    if (location.hash === "#home") {
-      return "white";
-    } else if (location.hash === "") {
-      return "white";
-    } else {
-      return "simple";
-    }
+    return location.hash === "#home" || "" ? "white" : "simple";
   };
 
   return (

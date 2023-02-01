@@ -32,11 +32,6 @@ const Header = ({ id }) => {
         </Lang>
       </HeaderWrap>
 
-      <HeaderWrapMob id={id}>
-        <LogoMob id={id} onClick={() => navigate("/")} />
-        <MenuMob id={id} onClick={() => setMenuOn(true)} />
-      </HeaderWrapMob>
-
       {menuOn ? <HamMenu /> : undefined}
     </Wrapper>
   );
@@ -64,21 +59,6 @@ const HeaderWrap = styled.header`
   align-items: center;
   &#simple {
     width: 90%;
-  }
-  @media all and (max-width: 960px) {
-    display: none;
-  }
-`;
-const HeaderWrapMob = styled.header`
-  display: none;
-  @media all and (max-width: 960px) {
-    display: block;
-    width: 80%;
-    height: 100px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
 `;
 const Menu = styled.div`
@@ -109,39 +89,6 @@ const Logo = styled.div`
     display: none;
   }
 `;
-const MenuMob = styled.div`
-  width: 35px;
-  height: 35px;
-  background-size: contain;
-  cursor: pointer;
-  &#white {
-    background: url("/img/sub_ham_w.png") no-repeat center center;
-  }
-  &#black,
-  &#simple {
-    background: url("/img/sub_ham.png") no-repeat center center;
-  }
-`;
-const LogoMob = styled.div`
-  width: 240px;
-  height: 53px;
-  cursor: pointer;
-  &#white {
-    background: url("/img/mainlogo_m.png") no-repeat left center;
-    background-size: contain;
-  }
-  &#black {
-    background: url("/img/mainlogo_m_b.png") no-repeat center center;
-    background-size: contain;
-  }
-  &#simple {
-    display: none;
-  }
-  @media all and (max-width: 550px) {
-    width: 150px;
-    height: 30px;
-  }
-`;
 const Lang = styled.ul`
   list-style: none;
   display: flex;
@@ -150,9 +97,6 @@ const Lang = styled.ul`
   padding: 0;
   margin: 0;
   width: 100px;
-  @media all and (max-width: 960px) {
-    display: none;
-  }
 `;
 const List = styled.li`
   cursor: pointer;

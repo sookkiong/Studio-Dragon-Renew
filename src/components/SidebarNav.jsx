@@ -62,6 +62,12 @@ const SideDiv = styled.div`
     display: flex;
     flex-direction: column;
   }
+  @media all and (max-width: 1190px) {
+    top: 40%;
+  }
+  @media all and (max-width: 960px) {
+    display: none;
+  }
 `;
 
 const FormCheckText = styled.span`

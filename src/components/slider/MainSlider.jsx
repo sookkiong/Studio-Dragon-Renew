@@ -17,15 +17,7 @@ const MainSlider = () => {
     pauseOnHover: false,
   };
   return (
-    <div
-      style={{
-        overflow: "hidden",
-        width: "60%",
-        height: "65%",
-        zIndex: "5",
-        marginRight: "15%",
-      }}
-    >
+    <Wrapper>
       <MainSlideStyle {...settings}>
         {MainSliderItem.map((slide) => {
           return (
@@ -35,11 +27,19 @@ const MainSlider = () => {
           );
         })}
       </MainSlideStyle>
-    </div>
+    </Wrapper>
   );
 };
 export default MainSlider;
 
+const Wrapper = styled.div`
+  overflow: hidden;
+  width: 60%;
+  height: 65%;
+  z-index: 5;
+  position: absolute;
+  right: 10%;
+`;
 const MainSlideStyle = styled(Slider)`
   .slick-prev,
   .slick-next {
